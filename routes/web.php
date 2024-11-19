@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,5 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+Route::get('/report', [AdminReportController::class, 'showAdminReport'])->name('admin.showAdminReport');
 
 require __DIR__.'/auth.php';
