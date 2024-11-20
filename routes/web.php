@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminFormController;
 use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,6 +20,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/report', [AdminReportController::class, 'showAdminReport'])->name('admin.showAdminReport');
+Route::get('/form-item', [AdminFormController::class, 'index'])->name('admin.showForm');
 
 Route::put('/report/verified/{report}', [AdminReportController::class, 'isVerified'])->name('admin.isVerified');
 
