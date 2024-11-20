@@ -15,4 +15,14 @@ class AdminReportController extends Controller
         // Kirim data ke view
         return view('adminReport', compact('reports'));
     }
+
+    public function isVerified(Report $report)
+    {
+        // Memastikan laporan yang sesuai diperbarui
+        $report->update(['is_verified' => 1]);
+    
+        return redirect()->route('admin.showAdminReport')
+                         ->with('success', 'Verified berhasil');
+    }
+    
 }

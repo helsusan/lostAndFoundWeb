@@ -10,6 +10,21 @@ use App\Models\ReportStatus;
 
 class Report extends Model
 {
+
+    protected $fillable = [
+        'id',
+        'item_id',           
+        'user_id',          
+        'location_id', 
+        'report_status_id',      
+        'description',       
+        'image', 
+        'is_verified',            
+        'location_lost',     
+        'time_lost',        
+    ];
+
+
     public function location(){
         return $this->belongsTo(Location::class);
     }

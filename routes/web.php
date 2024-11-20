@@ -20,4 +20,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/report', [AdminReportController::class, 'showAdminReport'])->name('admin.showAdminReport');
 
+Route::put('/report/verified/{report}', [AdminReportController::class, 'isVerified'])->name('admin.isVerified');
+
 require __DIR__.'/auth.php';
