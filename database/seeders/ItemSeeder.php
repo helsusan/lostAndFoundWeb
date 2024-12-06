@@ -23,7 +23,7 @@ class ItemSeeder extends Seeder
                 'description' => 'Iphone, black color.',
                 'location_found' => 'Perpustakaan Gedung W',
                 'time_found' => now(),
-                'image' => 'storage/images/iphone_hitam.jfif', // Gambar placeholder
+                'image' => 'images/iphone_hitam.jpg', // Gambar placeholder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
