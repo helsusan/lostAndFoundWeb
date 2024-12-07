@@ -27,8 +27,8 @@ Route::get('/reports/edit/{report}', [AdminReportController::class, 'editAdminRe
 Route::put('/reports/update/{report}', [AdminReportController::class, 'updateAdminReport'])->name('admin.updateReport');
 Route::delete('/reports/{report}', [AdminReportController::class, 'deleteAdminReport'])->name('admin.deleteReport');
 
-Route::get('/reports/{report}/assign', [AdminReportController::class, 'showAssignPage'])->name('admin.showAssignPage');
-Route::post('/reports/{report}/assign-item', [AdminReportController::class, 'assignItemToReport'])->name('admin.assignItemToReport');
+Route::get('/reports/assign/{report}', [AdminReportController::class, 'showAssignPage'])->name('admin.showAssignPage');
+Route::post('/reports/assign-item/{report}', [AdminReportController::class, 'assignItemToReport'])->name('admin.assignItemToReport');
 Route::get('/items/detail/{item}', [AdminReportController::class, 'detailItem'])->name('admin.detailItem');
 
 Route::get('/items', [AdminItemController::class, 'showAdminItem'])->name('admin.showAdminItem');
