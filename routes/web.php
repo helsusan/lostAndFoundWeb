@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AdminFormController;
 use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AdminItemController;
 use App\Http\Controllers\ProfileController;
@@ -21,7 +20,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/form-item', [AdminFormController::class, 'index'])->name('admin.showForm');
 
 Route::get('/reports', [AdminReportController::class, 'showAdminReport'])->name('admin.showAdminReport');
 Route::put('/reports/verified/{report}', [AdminReportController::class, 'isVerified'])->name('admin.isVerified');
@@ -31,15 +29,14 @@ Route::delete('/reports/{report}', [AdminReportController::class, 'deleteAdminRe
 
 Route::get('/reports/{report}/assign', [AdminReportController::class, 'showAssignPage'])->name('admin.showAssignPage');
 Route::post('/reports/{report}/assign-item', [AdminReportController::class, 'assignItemToReport'])->name('admin.assignItemToReport');
-Route::get('/items/{item}', [AdminReportController::class, 'detailItem'])->name('admin.detailItem');
-
+Route::get('/items/detail/{item}', [AdminReportController::class, 'detailItem'])->name('admin.detailItem');
 
 Route::get('/items', [AdminItemController::class, 'showAdminItem'])->name('admin.showAdminItem');
-Route::get('/items/{item}/edit', [AdminItemController::class, 'editAdminItem'])->name('admin.editItem');
-Route::put('/items/{item}', [AdminItemController::class, 'updateAdminItem'])->name('admin.updateItem');
-Route::delete('/items/{item}', [AdminItemController::class, 'deleteAdminItem'])->name('admin.deleteItem');
-Route::patch('/items/{id}/update-item-status', [AdminItemController::class, 'updateItemStatus']);
-
+Route::get('/items/create', [AdminItemController::class, 'create'])->name('admin.create');
+Route::get('/items/edit/{item}', [AdminItemController::class, 'editAdminItem'])->name('admin.editItem');
+Route::put('/items/update/{item}', [AdminItemController::class, 'updateAdminItem'])->name('admin.updateItem');
+Route::delete('/items/delete/{item}', [AdminItemController::class, 'deleteAdminItem'])->name('admin.deleteItem');
+Route::patch('/items/update-item-status/{id}', [AdminItemController::class, 'updateItemStatus']);
 
 Route::get('/home', [HomeController::class, 'index']);
 
