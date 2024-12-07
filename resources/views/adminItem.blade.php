@@ -18,7 +18,6 @@
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">Location Found</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">Time Found</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">Status</th>
-                    <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">Item Status</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase text-center">Action</th> <!-- Heading Action ditambahkan text-center -->
                 </tr>
             </thead>
@@ -47,7 +46,6 @@
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->description ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->location_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->time_found ?? 'N/A' }}</td>
-                        <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->status ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">
                         <select class="item-status-dropdown bg-[#f0f8ff] text-[#003366] py-2 px-4 rounded w-full min-w-[120px] text-sm" data-item-id="{{ $item->id }}">
                             <option value="Pending" @if($item->item_status == 'Pending') selected @endif>Pending</option>

@@ -32,7 +32,8 @@ Route::post('/reports/{report}/assign-item', [AdminReportController::class, 'ass
 Route::get('/items/detail/{item}', [AdminReportController::class, 'detailItem'])->name('admin.detailItem');
 
 Route::get('/items', [AdminItemController::class, 'showAdminItem'])->name('admin.showAdminItem');
-Route::get('/items/create', [AdminItemController::class, 'create'])->name('admin.create');
+Route::get('/items/create', [AdminItemController::class, 'createAdminItem'])->name('admin.createItem');
+Route::post('/items/insert', [AdminItemController::class, 'insertAdminItem'])->name('admin.insertItem');
 Route::get('/items/edit/{item}', [AdminItemController::class, 'editAdminItem'])->name('admin.editItem');
 Route::put('/items/update/{item}', [AdminItemController::class, 'updateAdminItem'])->name('admin.updateItem');
 Route::delete('/items/delete/{item}', [AdminItemController::class, 'deleteAdminItem'])->name('admin.deleteItem');
