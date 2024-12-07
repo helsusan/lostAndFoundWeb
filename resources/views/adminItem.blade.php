@@ -11,7 +11,7 @@
                 <tr class="bg-[#133E87] text-left text-white"> <!-- Header warna biru tua -->
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">ID</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">Image</th>
-                    <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">User</th>
+                    <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">Owner</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">Item Name</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">Item Category</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase">Description</th>
@@ -47,13 +47,14 @@
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->description ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->location_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->time_found ?? 'N/A' }}</td>
+                        <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->status ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">
-                            <select class="status-dropdown bg-[#f0f8ff] text-[#003366] py-2 px-4 rounded w-full min-w-[120px] text-sm" data-item-id="{{ $item->id }}">
-                                <option value="Not Found" @if($item->status == 'Not Found') selected @endif>Not Found</option>
-                                <option value="Found" @if($item->status == 'Found') selected @endif>Found</option>
-                            </select>
+                        <select class="item-status-dropdown bg-[#f0f8ff] text-[#003366] py-2 px-4 rounded w-full min-w-[120px] text-sm" data-item-id="{{ $item->id }}">
+                            <option value="Pending" @if($item->item_status == 'Pending') selected @endif>Pending</option>
+                            <option value="Returned" @if($item->item_status == 'Returned') selected @endif>Returned</option>
+                            <option value="Disposed" @if($item->item_status == 'Disposed') selected @endif>Disposed</option>
+                        </select>
                         </td>
-                        <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->itemStatus->name ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-center flex flex-col space-y-2">
                             <a href="{{ route('admin.editItem', $item->id) }}" class="flex items-center justify-center bg-[#f3cf56] hover:bg-[#e6be40] text-[#003366] font-bold px-4 py-2 rounded">
                                 Edit
@@ -101,33 +102,33 @@
         modal.classList.add('hidden');
     }
 
-    // Handle dropdown change and update status via AJAX
-    document.querySelectorAll('.status-dropdown').forEach(function(select) {
-        select.addEventListener('change', function() {
+    // Handle dropdown change for itemStatus
+    document.querySelectorAll('.item-status-dropdown').forEach(function (select) {
+        select.addEventListener('change', function () {
             const itemId = this.getAttribute('data-item-id');
-            const status = this.value;
+            const itemStatus = this.value;
 
-            // Send AJAX request to update the status
-            fetch(`/admin/items/${itemId}/update-status`, {
+            // Send AJAX request to update the item status
+            fetch(`/admin/items/${itemId}/update-item-status`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 },
-                body: JSON.stringify({ status: status })
+                body: JSON.stringify({ item_status: itemStatus }),
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Status updated successfully!');
-                } else {
-                    alert('Failed to update status.');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred.');
-            });
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.success) {
+                        alert('Item status updated successfully!');
+                    } else {
+                        alert(data.message || 'Failed to update item status.');
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating the item status.');
+                });
         });
     });
 </script>

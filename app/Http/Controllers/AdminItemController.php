@@ -65,26 +65,57 @@ class AdminItemController extends Controller
         return $item->image;
     }
 
-public function updateStatus(Request $request, $id)
+    public function updateItemStatus(Request $request, $id)
     {
-        // Find the item by ID
-        $item = Item::find($id);
-        
-        if (!$item) {
-            return response()->json(['success' => false, 'message' => 'Item not found.']);
+        try {
+            // Temukan item berdasarkan ID
+            $item = Item::find($id);
+    
+            if (!$item) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Item not found.'
+                ], 404);
+            }
+    
+            // Validasi input request
+            $validated = $request->validate([
+                'item_status' => 'required|in:Returned,Pending,Disposed', // Validasi hanya menerima status tertentu
+            ]);
+    
+            // Cek jika itemStatus baru sama dengan yang sudah ada
+            if ($item->item_status === $validated['item_status']) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'The item status is already set to the selected value.'
+                ], 400);
+            }
+    
+            // Update item status
+            $item->item_status = $validated['item_status'];
+            $item->save();
+    
+            // Respon sukses
+            return response()->json([
+                'success' => true,
+                'message' => 'Item status updated successfully.',
+                'updated_item_status' => $item->item_status // Kembalikan status terbaru
+            ], 200);
+    
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            // Tangani error validasi
+            return response()->json([
+                'success' => false,
+                'message' => 'Validation failed.',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            // Tangani error lainnya
+            return response()->json([
+                'success' => false,
+                'message' => 'An error occurred while updating the item status.',
+                'error' => $e->getMessage()
+            ], 500);
         }
-
-        // Validate the request to ensure a valid status
-        $validated = $request->validate([
-            'status' => 'required|in:Found,Not Found',  // Ensure only valid statuses are accepted
-        ]);
-
-        // Update the item's status
-        $item->status = $validated['status'];
-        $item->save();
-
-        // Return a success response
-        return response()->json(['success' => true, 'message' => 'Item status updated successfully.']);
     }
-
 }
