@@ -48,9 +48,9 @@
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">{{ $item->time_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-[#003366] font-medium">
                         <select class="item-status-dropdown bg-[#f0f8ff] text-[#003366] py-2 px-4 rounded w-full min-w-[120px] text-sm" data-item-id="{{ $item->id }}">
-                            <option value="Pending" @if($item->item_status == 'Pending') selected @endif>Pending</option>
-                            <option value="Returned" @if($item->item_status == 'Returned') selected @endif>Returned</option>
-                            <option value="Disposed" @if($item->item_status == 'Disposed') selected @endif>Disposed</option>
+                            <option value="2" @if($item->item_status_id == 2) selected @endif>Pending</option>
+                            <option value="1" @if($item->item_status_id == 1) selected @endif>Returned</option>
+                            <option value="3" @if($item->item_status_id == 3) selected @endif>Disposed</option>
                         </select>
                         </td>
                         <td class="py-4 px-6 border-b text-center flex flex-col space-y-2">
@@ -106,8 +106,7 @@
             const itemId = this.getAttribute('data-item-id');
             const itemStatus = this.value;
 
-            // Send AJAX request to update the item status
-            fetch(`/admin/items/${itemId}/update-item-status`, {
+            fetch(`/items/update-item-status/${itemId}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',

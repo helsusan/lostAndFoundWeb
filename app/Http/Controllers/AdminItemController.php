@@ -106,53 +106,32 @@ class AdminItemController extends Controller
 
         return $item ? $item->image : null;
     }
-
     public function updateItemStatus(Request $request, $id)
     {
         try {
-            // Temukan item berdasarkan ID
             $item = Item::find($id);
-    
+
             if (!$item) {
                 return response()->json([
                     'success' => false,
                     'message' => 'Item not found.'
                 ], 404);
             }
-    
-            // Validasi input request
+
             $validated = $request->validate([
-                'item_status' => 'required|in:Returned,Pending,Disposed', // Validasi hanya menerima status tertentu
+                'item_status' => 'required|exists:item_statuses,id', 
             ]);
-    
-            // Cek jika itemStatus baru sama dengan yang sudah ada
-            if ($item->item_status === $validated['item_status']) {
-                return response()->json([
-                    'success' => false,
-                    'message' => 'The item status is already set to the selected value.'
-                ], 400);
-            }
-    
-            // Update item status
-            $item->item_status = $validated['item_status'];
+
+            $item->item_status_id = $validated['item_status'];
             $item->save();
-    
-            // Respon sukses
+
             return response()->json([
                 'success' => true,
                 'message' => 'Item status updated successfully.',
-                'updated_item_status' => $item->item_status // Kembalikan status terbaru
+                'updated_item_status_id' => $item->item_status_id
             ], 200);
-    
-        } catch (\Illuminate\Validation\ValidationException $e) {
-            // Tangani error validasi
-            return response()->json([
-                'success' => false,
-                'message' => 'Validation failed.',
-                'errors' => $e->errors()
-            ], 422);
+
         } catch (\Exception $e) {
-            // Tangani error lainnya
             return response()->json([
                 'success' => false,
                 'message' => 'An error occurred while updating the item status.',
