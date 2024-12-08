@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use App\Models\Location; 
-use Carbon\Carbon;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -17,6 +16,11 @@ class MyReportController extends Controller
     public function showMyReports()
     {
         $reports = Report::where('user_id', auth()->id())->get();
+
+        $reports = $reports->map(function ($report) {
+            $report->time_lost = \Carbon\Carbon::parse($report->time_lost)->format('d-m-y H:i:s');
+            return $report;
+        });
 
         return view('myReports', compact('reports'));
     }
@@ -113,7 +117,11 @@ class MyReportController extends Controller
                     'image' => $imagePath ?? $report2->image,
                 ]);
             DB::commit();
-            return redirect()->route('myreport.showReports')->with('success', 'Report updated successfully.');
+
+            Session::flash('title', 'Changes Saved Successfully!');
+            Session::flash('message', '');
+            Session::flash('icon', 'success');
+            return redirect()->route('myreport.showReports');
         } catch(Exception $e){
             DB::rollBack();
             Log::error($e->getTraceAsString());
@@ -133,7 +141,11 @@ class MyReportController extends Controller
                 "report_status_id"=>1,
             ]);
             DB::commit();
-            return redirect()->route('myreport.showReports')->with('success', 'Report updated successfully.');
+            Session::flash('title', 'Status Changed Successfully!');
+            Session::flash('message', '');
+            Session::flash('icon', 'success');
+
+            return redirect()->route('myreport.showReports');
         } catch(Exception $e){
             DB::rollBack();
             Log::error($e->getTraceAsString());
@@ -155,7 +167,11 @@ class MyReportController extends Controller
 
         $report->delete();
 
-        return redirect()->route('myreport.showReports')->with('success', 'Report deleted successfully.');
+        Session::flash('title', 'Report Deleted Successfully!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
+
+        return redirect()->route('myreport.showReports');
     }
 
     // Upload gambar

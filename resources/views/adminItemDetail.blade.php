@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">Item Detail</h1>
+<h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">ITEM DETAILS</h1>
 
 <div class="max-w-4xl mx-auto bg-[#f0f8ff] p-8 rounded-lg shadow-lg border border-[#133E87]">
     <div class="p-6">

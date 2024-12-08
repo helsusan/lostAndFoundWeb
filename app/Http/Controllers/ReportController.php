@@ -17,6 +17,13 @@ class ReportController extends Controller
         // Ambil data dari tabel reports dengan relasi
         $reports = Report::with(['user', 'item', 'location', 'reportStatus'])->get();
 
+        // Format the time_lost field
+        $reports = $reports->map(function ($report) {
+            $report->time_lost = \Carbon\Carbon::parse($report->time_lost)->format('d-m-y H:i:s');
+            return $report;
+        });
+
+
         // Kirim data ke view
         return view('adminReport', compact('reports'));
     }
@@ -25,9 +32,12 @@ class ReportController extends Controller
     public function isVerified(Report $report)
     {
         $report->update(['is_verified' => 1]);
+
+        Session::flash('title', 'Verification Successful!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
     
-        return redirect()->route('admin.showAdminReport')
-                         ->with('success', 'Verified berhasil');
+        return redirect()->route('admin.showAdminReport');
     }
 
     // Edit admin report
@@ -59,9 +69,12 @@ class ReportController extends Controller
             'location_id' => $request->location_lost,
             'location_lost' => $request->location_detail,
         ]);
+
+        Session::flash('title', 'Item successfully added!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
     
-        return redirect()->route('admin.showAdminReport')
-                        ->with('success', 'Laporan berhasil diperbarui');
+        return redirect()->route('admin.showAdminReport');
     }
     
 
@@ -84,7 +97,12 @@ class ReportController extends Controller
     public function deleteAdminReport(Report $report)
     {
         $report->delete();
-        return redirect()->route('admin.showAdminReport')->with('success', 'Report deleted successfully.');
+
+        Session::flash('title', 'Report deleted successfully!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
+
+        return redirect()->route('admin.showAdminReport');
     }
 
     // Mengatur item status
@@ -99,8 +117,11 @@ class ReportController extends Controller
         // Tetapkan item ke laporan
         $report->update(['item_id' => $request->item_id]);
 
-        return redirect()->route('admin.showAdminReport')
-                         ->with('success', 'Item successfully assigned to report.');
+        Session::flash('title', 'Item successfully assigned to report!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
+
+        return redirect()->route('admin.showAdminReport');
     }
 
     // Menampilkan detail item yang sudah ter assign

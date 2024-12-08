@@ -1,10 +1,10 @@
 <?php
 
+use App\Http\Middleware\CheckRoleMiddleware;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
-use App\Http\Middleware\Admin;
-use App\Http\Middleware\User;
+
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -14,8 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->alias([
-            'admin'=>Admin::class,
-            'user'=>User::class
+            'role'=>CheckRoleMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
