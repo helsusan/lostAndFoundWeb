@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Location;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Session;
 
-class AdminReportController extends Controller
+class ReportController extends Controller
 {
 
     //show admin Reprot
@@ -18,6 +20,40 @@ class AdminReportController extends Controller
         // Kirim data ke view
         return view('adminReport', compact('reports'));
     }
+
+    public function createUserReport() {
+        $locations = Location::all();
+        return view('user.form', ['locations' => $locations]);
+    }
+
+    public function insertUserReport(Request $request){
+        $request->validate([
+            'description' => 'required|string|max:1000',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'location' => 'required|exists:locations,id',
+            'location_lost' => 'required|string|max:255',
+            'time_lost' => 'required|date',
+        ]);
+
+        $timeFoundTimestamp = strtotime($request->time_lost);
+
+        $report = new Report;
+        $report->user_id = auth()->user()->id;
+        $report->report_status_id = 2;
+        $report->description = $request->description;
+        $report->image = $this->uploadImage($request);
+        $report->location_id = $request->location;
+        $report->location_lost = $request->location_lost;
+        $report->time_lost = date('Y-m-d H:i:s', $timeFoundTimestamp);
+        $report->save();
+
+        Session::flash('title', 'Report Berhasil Diinput!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
+
+        return redirect()->route('home')->with('success', 'Report has been successfully submitted.');
+    }
+    
 
     // Memperbaruhi status is__verified
     public function isVerified(Report $report)
@@ -61,19 +97,19 @@ class AdminReportController extends Controller
                         ->with('success', 'Laporan berhasil diperbarui');
     }
 
-    private function uploadImage(Request $request, $report)
+    private function uploadImage(Request $request, Report $report = null)
     {
         if ($request->hasFile('image')) {
-            if ($report->image && file_exists(public_path($report->image))) {
+            if ($report && $report->image && file_exists(public_path($report->image))) {
                 unlink(public_path($report->image));
             }
-    
+
             $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->move(public_path('images'), $fileName);
+            $request->file('image')->move(public_path('images'), $fileName);
             return 'images/' . $fileName;
         }
-    
-        return $report->image;
+
+        return $report ? $report->image : null;
     }
 
     // Delete admin report

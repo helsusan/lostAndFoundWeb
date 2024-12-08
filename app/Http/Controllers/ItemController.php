@@ -8,7 +8,7 @@ use App\Models\Location;
 use Illuminate\Http\Request;
 use Session;
 
-class AdminItemController extends Controller
+class ItemController extends Controller
 {
     public function showAdminItem()
     {
