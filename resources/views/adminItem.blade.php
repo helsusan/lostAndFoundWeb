@@ -24,6 +24,7 @@
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Location Found</th>
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Time Found</th>
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Status</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Item Status</th>
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Action</th>
                 </tr>
             </thead>
@@ -52,6 +53,7 @@
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->description ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->location_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->time_found ?? 'N/A' }}</td>
+                        <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->status ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center">
                             <select class="item-status-dropdown bg-[#f0f8ff] text-[#003366] py-2 px-4 rounded w-full min-w-[120px] text-sm" data-item-id="{{ $item->id }}">
                                 <option value="2" @if($item->item_status_id == 2) selected @endif>Pending</option>
@@ -67,10 +69,10 @@
                                 Edit
                             </a>
 
-                            <form action="{{ route('admin.deleteItem', $item->id) }}" method="POST" class="w-full" onsubmit="return confirmDelete()">
+                            <form action="{{ route('admin.deleteItem', $item->id) }}" method="POST" class="w-full">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="flex items-center justify-start bg-[#f25c5c] hover:bg-[#d94a4a] text-white px-4 py-2 rounded font-bold">
+                                <button type="button" class="button-delete flex items-center justify-start bg-[#f25c5c] hover:bg-[#d94a4a] text-white px-4 py-2 rounded font-bold">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
                                     </svg>
@@ -141,13 +143,28 @@
         });
     });
 
-    function showError(message) {
-        alert(message);
-    }
+    // Tambahkan event listener ke tombol delete
+    document.querySelectorAll('.button-delete').forEach(function(button) {
+        button.addEventListener('click', function(e) {
+            e.preventDefault(); // Cegah pengiriman form otomatis
+            const form = this.closest('form'); // Cari elemen form terdekat
 
-    function confirmDelete() {
-        return confirm('Are you sure you want to delete this item?');
-    }
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Deleted data cannot be reverted!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Delete',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit(); // Kirim form jika pengguna mengonfirmasi
+                }
+            });
+        });
+    });
 </script>
 
 @endsection
