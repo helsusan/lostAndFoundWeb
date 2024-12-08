@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use App\Models\Item;
-use App\Models\ItemCategory; // Mengimpor model ItemCategory
+use App\Models\ItemCategory; 
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -36,4 +36,33 @@ class HomeController extends Controller
 
         return view('home', compact('verifiedReports', 'reports', 'lostGoodsItems', 'categories'));
     }
+
+    // HomeController.php
+    public function fetchVerifiedReports()
+    {
+        // Mengambil laporan yang diverifikasi
+        $verifiedReports = Report::where('is_verified', 1)
+            ->with(['user', 'location'])
+            ->get();
+
+        return response()->json($verifiedReports);
+    }
+
+    public function fetchLostGoods(Request $request)
+    {
+        $query = Item::where('item_status_id', 2) // Status Pending
+            ->with(['user', 'location', 'itemCategory']);
+
+        // Filter berdasarkan kategori jika ada
+        if ($request->has('category') && $request->category != '') {
+            $query->where('item_category_id', $request->category);
+        }
+
+        $lostGoodsItems = $query->get();
+
+        return response()->json($lostGoodsItems);
+    }
+
+    
+
 }
