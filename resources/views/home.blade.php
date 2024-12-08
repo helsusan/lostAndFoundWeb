@@ -80,26 +80,26 @@
                 </div>
             </form>
         </div>
-        @if($lostGoodsItems->count() > 0)
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                @foreach($lostGoodsItems as $item)
-                    <div class="lost-item-card bg-white shadow-lg rounded-lg p-4">
-                        <img src="{{ asset($item->image ?? 'images/default-image.jpg') }}"
-                            alt="Lost Item"
-                            class="rounded-lg cursor-pointer max-w-[120px] max-h-[120px] mx-auto w-auto h-40"
-                            onclick="showModal('{{ asset($item->image) }}')">
-                        <strong>{{ $item->name }}</strong><br>
-                        Description: {{ $item->description }}<br>
-                        Location Found: {{ $item->location_found }}<br>
-                        Time Found: {{ \Carbon\Carbon::parse($item->time_found)->format('d M Y, H:i') }}<br>  
-                    </div>
-                @endforeach
-            </div>
-        @else
-            <p class="text-gray-500 text-center">No lost goods found.</p>
-        @endif
-    </div>
-
+        <div id="lostGoodsContainer">
+            @if($lostGoodsItems->count() > 0)
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                    @foreach($lostGoodsItems as $item)
+                        <div class="lost-item-card bg-white shadow-lg rounded-lg p-4">
+                            <img src="{{ asset($item->image ?? 'images/default-image.jpg') }}"
+                                alt="Lost Item"
+                                class="rounded-lg cursor-pointer max-w-[120px] max-h-[120px] mx-auto w-auto h-40"
+                                onclick="showModal('{{ asset($item->image) }}')">
+                            <strong>{{ $item->name }}</strong><br>
+                            Description: {{ $item->description }}<br>
+                            Location Found: {{ $item->location_found }}<br>
+                            Time Found: {{ \Carbon\Carbon::parse($item->time_found)->format('d M Y, H:i') }}<br>  
+                        </div>
+                    @endforeach
+                </div>
+            @else
+                <p class="text-gray-500 text-center">No lost goods found.</p>
+            @endif
+        </div>
     </div>
 
     <!-- Modal -->
