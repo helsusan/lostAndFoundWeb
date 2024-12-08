@@ -40,6 +40,9 @@ Route::delete('/items/delete/{item}', [ItemController::class, 'deleteAdminItem']
 Route::patch('/items/update-item-status/{id}', [ItemController::class, 'updateItemStatus']);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/fetch-verified-reports', [HomeController::class, 'fetchVerifiedReports']);
+Route::get('/fetch-lost-goods', [HomeController::class, 'fetchLostGoods']);
+
 Route::get('/myreports', [MyReportController::class, 'showMyReports'])->name('myreport.showReports');
 Route::get('/myreports/edit/{report}', [MyReportController::class, 'editMyReport'])->name('myreport.editReport');
 Route::put('/myreports/update/{report}', [MyReportController::class, 'updateMyReport'])->name('myreport.updateReport');
@@ -48,4 +51,6 @@ Route::delete('/myreports/{report}', [MyReportController::class, 'deleteMyReport
 Route::get('/myreports/create', [MyReportController::class, 'createMyReport'])->name('myreport.createReport');
 Route::post('/myreports/insert', [MyReportController::class, 'insertMyReport'])->name('myreport.insertReport');
 
+
 require __DIR__.'/auth.php';
+
