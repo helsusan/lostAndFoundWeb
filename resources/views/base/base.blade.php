@@ -16,5 +16,6 @@
     <div class="container m-auto">
         @yield('content')
     </div>
+    @yield('home')
   </body>
 </html>

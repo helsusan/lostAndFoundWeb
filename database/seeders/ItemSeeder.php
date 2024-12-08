@@ -40,6 +40,58 @@ class ItemSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'user_id'=> null,
+                'item_category_id' => 2,
+                'location_id' => 2,
+                'item_status_id' => 2,
+                'name' => 'Pencil Case',
+                'description' => 'Pencil Case, blue color.',
+                'location_found' => 'Lab SI Gedung P',
+                'time_found' => now(),
+                'image' => 'images/1733508029_PencilCase.jpg', // Gambar placeholder
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id'=> null,
+                'item_category_id' => 2,
+                'location_id' => 2,
+                'item_status_id' => 2,
+                'name' => 'Pencil Case',
+                'description' => 'Pencil Case, blue color.',
+                'location_found' => 'Lab SI Gedung P',
+                'time_found' => now(),
+                'image' => 'images/1733508029_PencilCase.jpg', // Gambar placeholder
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id'=> null,
+                'item_category_id' => 2,
+                'location_id' => 2,
+                'item_status_id' => 2,
+                'name' => 'Pencil Case',
+                'description' => 'Pencil Case, blue color.',
+                'location_found' => 'Lab SI Gedung P',
+                'time_found' => now(),
+                'image' => 'images/1733508029_PencilCase.jpg', // Gambar placeholder
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'user_id'=> null,
+                'item_category_id' => 2,
+                'location_id' => 2,
+                'item_status_id' => 2,
+                'name' => 'Pencil Case',
+                'description' => 'Pencil Case, blue color.',
+                'location_found' => 'Lab SI Gedung P',
+                'time_found' => now(),
+                'image' => 'images/1733508029_PencilCase.jpg', // Gambar placeholder
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }
