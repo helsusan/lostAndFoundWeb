@@ -2,12 +2,12 @@
 
 @section('content')
 
-<h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">Assign Item to Report</h1>
+<h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">ASSIGN ITEM TO REPORT</h1>
 
 <div class="shadow-lg rounded-lg overflow-hidden mx-6 md:mx-24 my-10 bg-[#f0f8ff]"> 
     <!-- Report Details -->
     <div class="mb-8 px-6 mt-4">
-        <h2 class="text-2xl font-bold mb-2 text-[#133E87]">Report Details</h2>
+        <h2 class="text-2xl font-bold mb-2 text-[#133E87]">REPORT DETAILS</h2>
         
         <!-- Display Report Image -->
         @if ($report->image)
