@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Report;
 use App\Models\Item;
-use App\Models\ItemCategory; 
+use App\Models\ItemCategory;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -37,7 +37,7 @@ class HomeController extends Controller
         return view('home', compact('verifiedReports', 'reports', 'lostGoodsItems', 'categories'));
     }
 
-    // HomeController.php
+    // Fetch reports yang sudah diverifikasi
     public function fetchVerifiedReports()
     {
         // Mengambil laporan yang diverifikasi
@@ -48,6 +48,7 @@ class HomeController extends Controller
         return response()->json($verifiedReports);
     }
 
+    // Fetch Lost Goods
     public function fetchLostGoods(Request $request)
     {
         $query = Item::where('item_status_id', 2) // Status Pending
@@ -62,7 +63,4 @@ class HomeController extends Controller
 
         return response()->json($lostGoodsItems);
     }
-
-    
-
 }

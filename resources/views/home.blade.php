@@ -232,13 +232,7 @@
                 loadVerifiedReports();
                 loadLostGoods();
             }, 10000);
-
-            // Panggil pertama kali saat halaman dimuat
-            loadVerifiedReports();
-            loadLostGoods();
         });
     </script>
-
-    @endsection
 </body>
 </html>
