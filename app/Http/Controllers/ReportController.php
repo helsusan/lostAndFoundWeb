@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use App\Models\Location;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use Session;
 
-class AdminReportController extends Controller
+class ReportController extends Controller
 {
 
     //show admin Reprot
@@ -31,7 +33,8 @@ class AdminReportController extends Controller
     // Edit admin report
     public function editAdminReport(Report $report)
     {
-        return view('adminReportEdit', compact('report'));
+        $locations = Location::orderBy('building')->get();
+        return view('adminReportEdit', compact('report', 'locations'));
     }
 
     public function updateAdminReport(Request $request, Report $report)
@@ -39,41 +42,42 @@ class AdminReportController extends Controller
         // Validasi data input
         $request->validate([
             'description' => 'required|string|max:255',
-            'location_lost' => 'nullable|string|max:255',
-            'time_lost' => 'nullable|date',
+            'location_lost' => 'required|exists:locations,id',
+            'location_detail' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
         // Perbarui gambar jika ada
         if ($request->hasFile('image')) {
             $imagePath = $this->uploadImage($request, $report);
             $report->image = $imagePath;
         }
-
+    
         // Perbarui laporan
         $report->update([
             'description' => $request->description,
-            'location_lost' => $request->location_lost,
-            'time_lost' => $request->time_lost ? \Illuminate\Support\Carbon::parse($request->time_lost) : null,
+            'location_id' => $request->location_lost,
+            'location_lost' => $request->location_detail,
         ]);
-
+    
         return redirect()->route('admin.showAdminReport')
                         ->with('success', 'Laporan berhasil diperbarui');
     }
+    
 
-    private function uploadImage(Request $request, $report)
+    private function uploadImage(Request $request, Report $report = null)
     {
         if ($request->hasFile('image')) {
-            if ($report->image && file_exists(public_path($report->image))) {
+            if ($report && $report->image && file_exists(public_path($report->image))) {
                 unlink(public_path($report->image));
             }
-    
+
             $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->move(public_path('images'), $fileName);
+            $request->file('image')->move(public_path('images'), $fileName);
             return 'images/' . $fileName;
         }
-    
-        return $report->image;
+
+        return $report ? $report->image : null;
     }
 
     // Delete admin report
@@ -82,9 +86,6 @@ class AdminReportController extends Controller
         $report->delete();
         return redirect()->route('admin.showAdminReport')->with('success', 'Report deleted successfully.');
     }
-
-
-
 
     // Mengatur item status
     // Memperbaruhi data sesuai item yang dipilih

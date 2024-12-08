@@ -10,6 +10,20 @@
           body {
               background-color: #E4F2F5;
           }
+
+          .found {
+              background-color: #59b23a;
+              color: white;
+              border-radius: 5px;
+              padding: 4px 8px;
+          }
+
+          .notfound {
+              background-color: #80898f;
+              color: white;
+              border-radius: 5px;
+              padding: 4px 8px;
+          }
       </style>
       <!-- SweetAlert2 -->
        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -21,4 +35,5 @@
     </div>
     @yield('home')
   </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </html>

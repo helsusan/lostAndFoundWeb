@@ -11,7 +11,7 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
-<body class="antialiased bg-gradient-to-r from-purple-400 via-blue-400 to-purple-400">
+<body class="antialiased" style="background-image: url('/images/login-bg.jpeg'); background-size: cover; background-position: center;">
     <div class="min-h-screen flex items-center justify-center">
         <div class="w-full max-w-md bg-white rounded-lg shadow-lg p-6">
             <div class="text-center mb-4">

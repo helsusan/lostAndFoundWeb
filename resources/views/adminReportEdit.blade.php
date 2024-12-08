@@ -2,54 +2,71 @@
 
 @section('content')
 
-<h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">Edit Report</h1>
-
-<div class="max-w-4xl mx-auto bg-[#f0f8ff] p-8 rounded-lg shadow-lg border border-[#133E87]">
-    <form action="{{ route('admin.updateReport', $report->id) }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        @method('PUT')
-
-        <!-- Description Field -->
-        <div class="mb-6">
-            <label for="description" class="block text-lg font-semibold text-[#133E87] mb-2">Description</label>
-            <textarea id="description" name="description" class="w-full border border-[#5A9BCF] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#133E87] transition-all" required>{{ old('description', $report->description) }}</textarea>
-        </div>
-
-        <!-- Detail Location Field -->
-        <div class="mb-6">
-            <label for="location_lost" class="block text-lg font-semibold text-[#133E87] mb-2">Detail Location</label>
-            <input type="text" id="location_lost" name="location_lost" class="w-full border border-[#5A9BCF] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#133E87] transition-all" value="{{ old('location_lost', $report->location_lost) }}">
-        </div>
-
-        <!-- Lost Time Field -->
-        <div class="mb-6">
-            <label for="time_lost" class="block text-lg font-semibold text-[#133E87] mb-2">Lost Time</label>
-            <input type="datetime-local" id="time_lost" name="time_lost" class="w-full border border-[#5A9BCF] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#133E87] transition-all"
-            value="{{ old('time_lost', $report->time_lost ? \Illuminate\Support\Carbon::parse($report->time_lost)->format('Y-m-d\TH:i') : '') }}">
-        </div>
-
-        <!-- Image Field -->
-        <div class="mb-6">
-            <label for="image" class="block text-lg font-semibold text-[#133E87] mb-2">Image</label>
-            <input type="file" id="image" name="image" class="w-full border border-[#5A9BCF] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#133E87] transition-all">
-            @if ($report->image)
-                <div class="mt-4">
-                    <p class="text-sm text-gray-600">Current Image:</p>
-                    <img src="{{ asset($report->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg mt-2">
+<div class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-4xl p-6" style="background-color: #133E87; color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <form action="{{ route('admin.updateReport', $report->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <h2 class="mb-6 text-2xl font-bold text-center">EDIT REPORT</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                
+                <!-- Description -->
+                <div class="md:col-span-2">
+                    <label for="description" class="block mb-2 text-sm font-medium">Description</label>
+                    <textarea id="description" name="description" rows="4"
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        required>{{ old('description', $report->description) }}</textarea>
                 </div>
-            @endif
-        </div>
 
-        <!-- Action Buttons -->
-        <div class="flex justify-end gap-4 mt-8">
-            <a href="{{ route('admin.showAdminReport') }}" class="bg-[#f25c5c] text-white px-6 py-3 rounded-lg hover:bg-[#d94a4a] font-semibold transition-all">
-                Cancel
-            </a>
-            <button type="submit" class="bg-[#133E87] text-white px-6 py-3 rounded-lg hover:bg-[#5A9BCF] font-semibold transition-all">
-                Save Changes
-            </button>
-        </div>
-    </form>
+                <!-- Detail Location -->
+                <div>
+                    <label for="location_detail" class="block mb-2 text-sm font-medium">Location Detail</label>
+                    <input type="text" id="location_detail" name="location_detail" 
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        value="{{ old('location_detail', $report->location_lost) }}">
+                </div>
+
+                <!-- Location Lost-->
+                <div>
+                    <label for="location_lost" class="block mb-2 text-sm font-medium">Location Lost</label>
+                    <select name="location_lost" id="location_lost" 
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <option value="" selected disabled>Select location</option>
+                        @foreach($locations as $location)
+                            <option value="{{ $location->id }}" @if($report->location_id == $location->id) selected @endif>
+                                {{ $location->name }} - {{ $location->building }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Image -->
+                <div>
+                    <label for="image" class="block mb-2 text-sm font-medium">Upload Image</label>
+                    <input type="file" id="image" name="image" 
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @if ($report->image)
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-300">Current Image:</p>
+                            <img src="{{ asset($report->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg mt-2">
+                        </div>
+                    @endif
+                </div>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="flex justify-center gap-4">
+                <a href="{{ route('admin.showAdminReport') }}" 
+                    class="bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:ring-4 focus:outline-none focus:ring-red-300">
+                    Cancel
+                </a>
+                <button type="submit" 
+                    class="bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:ring-4 focus:outline-none focus:ring-green-300">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
 
 @endsection
