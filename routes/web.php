@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AdminItemController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MyReportController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -38,6 +39,12 @@ Route::get('/items/edit/{item}', [AdminItemController::class, 'editAdminItem'])-
 Route::put('/items/update/{item}', [AdminItemController::class, 'updateAdminItem'])->name('admin.updateItem');
 Route::delete('/items/delete/{item}', [AdminItemController::class, 'deleteAdminItem'])->name('admin.deleteItem');
 Route::patch('/items/update-item-status/{id}', [AdminItemController::class, 'updateItemStatus']);
+
+Route::get('/myreports', [MyReportController::class, 'showMyReports'])->name('myreport.showReports');
+Route::get('/myreports/edit/{report}', [MyReportController::class, 'editMyReport'])->name('myreport.editReport');
+Route::put('/myreports/update/{report}', [MyReportController::class, 'updateMyReport'])->name('myreport.updateReport');
+Route::put('/myreports/found/{id}', [MyReportController::class, 'foundReport'])->name('myreport.foundReport');
+Route::delete('/myreports/{report}', [MyReportController::class, 'deleteMyReport'])->name('myreport.deleteReport');
 
 Route::get('/home', [HomeController::class, 'index']);
 
