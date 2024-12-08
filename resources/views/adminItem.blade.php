@@ -131,17 +131,32 @@
                 .then((response) => response.json())
                 .then((data) => {
                     if (data.success) {
-                        alert('Item status updated successfully!');
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Success',
+                            text: 'Item status updated successfully!',
+                            timer: 1500,
+                            showConfirmButton: false,
+                        });
                     } else {
-                        alert(data.message || 'Failed to update item status.');
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: data.message || 'Failed to update item status.',
+                        });
                     }
                 })
                 .catch((error) => {
                     console.error('Error:', error);
-                    alert('An error occurred while updating the item status.');
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: 'An error occurred while updating the item status.',
+                    });
                 });
         });
     });
+
 
     // Tambahkan event listener ke tombol delete
     document.querySelectorAll('.button-delete').forEach(function(button) {
