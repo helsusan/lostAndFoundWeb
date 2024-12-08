@@ -3,6 +3,7 @@
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\MyReportController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
@@ -42,5 +43,10 @@ Route::delete('/items/delete/{item}', [ItemController::class, 'deleteAdminItem']
 Route::patch('/items/update-item-status/{id}', [ItemController::class, 'updateItemStatus']);
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/myreports', [MyReportController::class, 'showMyReports'])->name('myreport.showReports');
+Route::get('/myreports/edit/{report}', [MyReportController::class, 'editMyReport'])->name('myreport.editReport');
+Route::put('/myreports/update/{report}', [MyReportController::class, 'updateMyReport'])->name('myreport.updateReport');
+Route::put('/myreports/found/{id}', [MyReportController::class, 'foundReport'])->name('myreport.foundReport');
+Route::delete('/myreports/{report}', [MyReportController::class, 'deleteMyReport'])->name('myreport.deleteReport');
 
 require __DIR__.'/auth.php';
