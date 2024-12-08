@@ -2,55 +2,8 @@
 
 @section('content')
 
-@if(session('success'))
-    <div id="success-alert" class="fixed mx-auto w-1/3 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded shadow-md" role="alert">
-        <div class="flex justify-between items-center">
-            <span>{{ session('success') }}</span>
-            <button onclick="document.getElementById('success-alert').style.display='none'" class="text-green-700 hover:text-green-900 font-bold ml-4">
-                &times;
-            </button>
-        </div>
-    </div>
-    <script>
-        setTimeout(() => {
-            const alert = document.getElementById('success-alert');
-            if (alert) alert.style.display = 'none';
-        }, 2000);
-    </script>
-@endif
-
-@if(session('error'))
-    <div id="error-alert" class="fixed mx-auto w-1/3 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded shadow-md" role="alert">
-        <div class="flex justify-between items-center">
-            <span>{{ session('error') }}</span>
-            <button onclick="document.getElementById('error-alert').style.display='none'" class="text-red-700 hover:text-red-900 font-bold ml-4">
-                &times;
-            </button>
-        </div>
-    </div>
-    <script>
-        setTimeout(() => {
-            const alert = document.getElementById('error-alert');
-            if (alert) alert.style.display = 'none';
-        }, 2000);
-    </script>
-@endif
 
 <h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">My Reports</h1>
-
-@if (Session::has('message'))
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            Swal.fire({
-                title: '{{ Session::get('title') }}',
-                text: '{{ Session::get('message') }}',
-                icon: '{{ Session::get('icon') == "success" ? "success" : "error" }}',
-                confirmButtonText: 'OK',
-                confirmButtonColor: "#2463eb",
-            });
-        });
-    </script>
-@endif
 
 <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-10 my-10 bg-[#f0f8ff]">
     <div class="overflow-x-auto">
@@ -106,7 +59,7 @@
                                 <form id="findform" action="{{ route('myreport.foundReport', $report->id)}}" method="POST">
                                     @csrf
                                     @method('PUT')
-                                    <button onclick="findReport(this)" data-id="{{$report->id }}" type="submit" id="findbutton" class="flex items-center justify-center bg-[#56cef3] text-white px-4 py-2 rounded hover:bg-[#e6be40] min-w-[120px] font-bold">
+                                    <button onclick="findReport(this)" data-id="{{$report->id }}" type="submit" id="findbutton" class="flex items-center justify-center bg-[#56cef3] text-white px-4 py-2 rounded hover:bg-[#439ab4] min-w-[120px] font-bold">
                                     <svg xmlns="http://www.w3.org/2000/svg" style="margin-right:8px;" height="14" width="14" viewBox="0 0 512 512"><!--!Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.--><path fill="#ffffff" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"/></svg>
                                         Found!
                                     </button>
