@@ -2,7 +2,7 @@
 
 @section('content')
 
-<h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">Report Request</h1>
+<h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">REPORT REQUEST</h1>
 
 <div class="shadow-lg rounded-lg overflow-hidden mx-4 md:mx-20 my-10 bg-[#f0f8ff]"> 
     <div class="overflow-x-auto"> 
@@ -14,7 +14,7 @@
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase text-center">Contact Person</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase text-center">Description</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase text-center">Location</th>
-                    <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase text-center">Detail Location</th>
+                    <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase text-center">Location Detail</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase text-center">Time Lost</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase text-center">Status</th>
                     <th class="w-1/12 py-4 px-6 border-b text-sm font-bold uppercase text-center">Item Status</th>

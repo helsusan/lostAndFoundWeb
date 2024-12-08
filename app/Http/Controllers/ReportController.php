@@ -67,7 +67,8 @@ class ReportController extends Controller
     // Edit admin report
     public function editAdminReport(Report $report)
     {
-        return view('adminReportEdit', compact('report'));
+        $locations = Location::orderBy('building')->get();
+        return view('adminReportEdit', compact('report', 'locations'));
     }
 
     public function updateAdminReport(Request $request, Report $report)
@@ -75,27 +76,28 @@ class ReportController extends Controller
         // Validasi data input
         $request->validate([
             'description' => 'required|string|max:255',
-            'location_lost' => 'nullable|string|max:255',
-            'time_lost' => 'nullable|date',
+            'location_lost' => 'required|exists:locations,id',
+            'location_detail' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
         // Perbarui gambar jika ada
         if ($request->hasFile('image')) {
             $imagePath = $this->uploadImage($request, $report);
             $report->image = $imagePath;
         }
-
+    
         // Perbarui laporan
         $report->update([
             'description' => $request->description,
-            'location_lost' => $request->location_lost,
-            'time_lost' => $request->time_lost ? \Illuminate\Support\Carbon::parse($request->time_lost) : null,
+            'location_id' => $request->location_lost,
+            'location_lost' => $request->location_detail,
         ]);
-
+    
         return redirect()->route('admin.showAdminReport')
                         ->with('success', 'Laporan berhasil diperbarui');
     }
+    
 
     private function uploadImage(Request $request, Report $report = null)
     {
