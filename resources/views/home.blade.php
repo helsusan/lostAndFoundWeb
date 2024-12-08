@@ -27,7 +27,7 @@
 <body>
     @extends('base.base')
 
-    @section('home')
+    @section('content')
 
     <!-- Container -->
     <div class="container mx-auto">
@@ -80,7 +80,7 @@
                 </div>
             </form>
         </div>
-        <div id="lostGoodsContainer">
+        <div class="lostGoodsContainer pb-12">
             @if($lostGoodsItems->count() > 0)
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                     @foreach($lostGoodsItems as $item)
@@ -111,11 +111,7 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <div class="bg-[#133E87] text-white text-center py-6 mt-12">
-        <p class="text-sm">Lost something? Found an item? Let's reconnect people and their belongings. Contact us to report or search for lost items.</p>
-        <p class="text-sm mt-2">Address: Lorem Street | Phone Number: 123-456-789</p>
-    </div>
+   
 
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script>
@@ -236,3 +232,5 @@
     </script>
 </body>
 </html>
+
+@endsection
