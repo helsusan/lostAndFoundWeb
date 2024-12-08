@@ -24,35 +24,11 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // Validasi input
-        $request->validate([
-            'email' => ['required', 'string', 'email'],
-            'password' => ['required', 'string'],
-        ]);
+        $request->authenticate();
 
-        // Login menggunakan Auth::attempt
-        if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {
-            $request->session()->regenerate();
+        $request->session()->regenerate();
 
-            // Redirect berdasarkan role
-            $user = Auth::user();
-            if ($user->role === 'admin') {
-                return redirect()->route('items');
-            } elseif ($user->role === 'user') {
-                return redirect()->route('dashboard');
-            }
-
-            // Default redirect jika role tidak dikenal
-            return redirect()->route('login')->withErrors([
-                'email' => 'Wrong email and password.',
-                'password' => 'Wrong email and password.',
-            ]);
-        }
-
-        // Jika login gagal
-        return back()->withErrors([
-            'email' => 'The provided credentials do not match our records.',
-        ]);
+        return redirect()->intended(route('home', absolute: false));
     }
 
     /**
