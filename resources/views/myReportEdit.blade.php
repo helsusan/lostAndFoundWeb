@@ -2,85 +2,77 @@
 
 @section('content')
 
-<h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">Edit Report</h1>
-
-<div class="max-w-4xl mx-auto bg-[#f0f8ff] p-8 rounded-lg shadow-lg border border-[#133E87] mb-8">
-    <form action="{{ route('myreport.updateReport', $report->id) }}" method="POST" enctype="multipart/form-data" id="formedit">
-        @csrf
-        @method('PUT')
-
-        <div class="mb-6">
-            <label for="description" class="block text-lg font-semibold text-[#133E87] mb-2">Description</label>
-            <textarea id="description" name="description" class="w-full border border-[#5A9BCF] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#133E87] transition-all" required>{{ old('description', $report->description) }}</textarea>
-        </div>
-
-        <!-- location lost itu location->id (DROPDOWN) -->
-        <div class="mb-6">
-            <label for="location_lost" class="block text-lg font-semibold text-[#133E87] mb-2">Location Lost</label>
-            <select id="location_lost" name="location_lost" class="w-full border border-[#5A9BCF] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#133E87] transition-all" required>
-                <option value="">Select Location Lost</option>
-                @foreach($locations as $location)
-                    <option value="{{ $location->id }}" @if($report->location_id == $location->id) selected @endif>
-                        {{ $location->name }} - {{ $location->building }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <!-- location detail itu report->location_lost (INPUTAN USER) -->
-        <div class="mb-6">
-            <label for="location_detail" class="block text-lg font-semibold text-[#133E87] mb-2">Location Detail</label>
-            <input type="text" id="location_detail" name="location_detail" class="w-full border border-[#5A9BCF] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#133E87] transition-all" value="{{ old('location_detail', $report->location_lost) }}">
-        </div>
-
-        <input type="hidden" name="time_lost" value="{{ $report->time_lost }}">
-
-        <div class="mb-6">
-            <label for="image" class="block text-lg font-semibold text-[#133E87] mb-2">Image</label>
-            <input type="file" id="image" name="image" class="w-full border border-[#5A9BCF] rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#133E87] transition-all">
-            @if ($report->image)
-                <div class="mt-4">
-                    <p class="text-sm text-gray-600">Current Image:</p>
-                    <img src="{{ asset($report->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg mt-2">
+<div class="min-h-screen flex items-center justify-center">
+    <div class="w-full max-w-4xl p-6" style="background-color: #133E87; color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+        <form action="{{ route('myreport.updateReport', $report->id) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('PUT')
+            <h2 class="mb-6 text-2xl font-bold text-center">EDIT REPORT</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- Description -->
+                <div class="md:col-span-2">
+                    <label for="description" class="block mb-2 text-sm font-medium">Description</label>
+                    <textarea id="description" name="description" rows="4"
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        placeholder="Enter description" required>{{ old('description', $report->description) }}</textarea>
                 </div>
-            @endif
-        </div>
 
-        <div class="flex justify-end gap-4 mt-8">
-            <a href="{{ route('myreport.showReports') }}" class="bg-[#f25c5c] text-white px-6 py-3 rounded-lg hover:bg-[#d94a4a] font-semibold transition-all">
-                Cancel
-            </a>
-            <button type="submit" class="bg-[#133E87] text-white px-6 py-3 rounded-lg hover:bg-[#5A9BCF] font-semibold transition-all">
-                Save Changes
-            </button>
-        </div>
-    </form>
+                <!-- Location Lost -->
+                <div>
+                    <label for="location_lost" class="block mb-2 text-sm font-medium">Location Lost</label>
+                    <select id="location_lost" name="location_lost"
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        required>
+                        <option value="" selected disabled>Select Location Lost</option>
+                        @foreach($locations as $location)
+                        <option value="{{ $location->id }}" @if($report->location_id == $location->id) selected @endif>
+                            {{ $location->name }} - {{ $location->building }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Location Detail -->
+                <div>
+                    <label for="location_detail" class="block mb-2 text-sm font-medium">Location Detail</label>
+                    <input type="text" id="location_detail" name="location_detail"
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        value="{{ old('location_detail', $report->location_lost) }}" 
+                        placeholder="Enter detail location">
+                </div>
+
+                <!-- Image -->
+                <div>
+                    <label for="image" class="block mb-2 text-sm font-medium">Upload Image</label>
+                    <input type="file" id="image" name="image"
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        accept="image/*">
+                    @if ($report->image)
+                    <div class="mt-4">
+                        <p class="text-sm text-gray-300">Current Image:</p>
+                        <img src="{{ asset($report->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg mt-2">
+                    </div>
+                    @endif
+                </div>
+
+                <!-- Hidden Time Lost -->
+                <input type="hidden" name="time_lost" value="{{ $report->time_lost }}">
+            </div>
+            
+            <!-- Buttons -->
+            <div class="flex justify-center gap-4">
+                <a href="{{ route('myreport.showReports') }}" 
+                    class="bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:ring-4 focus:outline-none focus:ring-red-300">
+                    Cancel
+                </a>
+                <button type="submit" 
+                    class="bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:ring-4 focus:outline-none focus:ring-green-300">
+                    Save Changes
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
-
-<script>
-    // $('#formedit').on('submit', function(e) {
-    //     e.preventDefault();
-    //     $dataa = new FormData(this);
-    //     console.log($dataa);
-    //     $.ajax({
-    //         url: '{{ route('myreport.updateReport', $report->id)}}',
-    //         method: "PUT",
-    //         data: $dataa,
-    //         contentType: false,
-    //         processData: false,
-    //         dataType: "json",
-    //         success: function(response) {
-    //             alert()
-    //             // console.log(response);
-    //             // window.location.href="{{route('myreport.showReports')}}"
-    //         },
-    //         error: function(xhr, status, error) {
-    //             console.log(xhr);
-    //             console.log(status);
-    //             console.log(error);
-    //         }
-    //     });
-    // });
-</script>
 
 @endsection

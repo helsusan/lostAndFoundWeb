@@ -15,7 +15,6 @@ class MyReportController extends Controller
     // List all report
     public function showMyReports()
     {
-        // Ambil laporan milik pengguna yang sedang login
         $reports = Report::where('user_id', auth()->id())->get();
 
         return view('myReports', compact('reports'));
@@ -39,7 +38,7 @@ class MyReportController extends Controller
     public function updateMyReport($report, Request $request)
     {
         // dd($report,$request->all());
-        Log::info("tes");
+        // Log::info("tes");
         try {
             DB::beginTransaction();
             $data=Report::where('id',$report);
@@ -47,8 +46,8 @@ class MyReportController extends Controller
             Log::info($report2);
             if($report2==null){
                 return DB::rollBack();
-                Log::error("data not found");
-                return redirect()->route('myreport.showReports')->with('error', "data not found");
+                Log::error("Data not found");
+                return redirect()->route('myreport.showReports')->with('error', "Data not found");
             }
             // dd($report2, $request->all());
                 if ($report2->user_id !== auth()->id() || $report2->is_verified) {
@@ -129,9 +128,9 @@ class MyReportController extends Controller
     {
         if ($request->hasFile('image')) {
             // Hapus gambar lama jika ada
-            if ($report->image && file_exists(public_path($report->image))) {
-                unlink(public_path($report->image));
-            }
+            // if ($report->image) {
+            //     unlink(public_path($report->image));
+            // }
 
             // Simpan gambar baru
             $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
