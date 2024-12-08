@@ -4,7 +4,7 @@
 
 <div class="min-h-screen flex items-center justify-center">
     <div class="w-full max-w-4xl p-6" style="background-color: #133E87; color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
-        <form method="POST" action="{{ route('user.insertReport')}}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('myreport.insertReport')}}" enctype="multipart/form-data">
             @csrf
             @method('post')
             <h2 class="mb-6 text-2xl font-bold text-center">REPORT FORM</h2>

@@ -21,40 +21,6 @@ class ReportController extends Controller
         return view('adminReport', compact('reports'));
     }
 
-    public function createUserReport() {
-        $locations = Location::all();
-        return view('user.form', ['locations' => $locations]);
-    }
-
-    public function insertUserReport(Request $request){
-        $request->validate([
-            'description' => 'required|string|max:1000',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'location' => 'required|exists:locations,id',
-            'location_lost' => 'required|string|max:255',
-            'time_lost' => 'required|date',
-        ]);
-
-        $timeFoundTimestamp = strtotime($request->time_lost);
-
-        $report = new Report;
-        $report->user_id = auth()->user()->id;
-        $report->report_status_id = 2;
-        $report->description = $request->description;
-        $report->image = $this->uploadImage($request);
-        $report->location_id = $request->location;
-        $report->location_lost = $request->location_lost;
-        $report->time_lost = date('Y-m-d H:i:s', $timeFoundTimestamp);
-        $report->save();
-
-        Session::flash('title', 'Report Berhasil Diinput!');
-        Session::flash('message', '');
-        Session::flash('icon', 'success');
-
-        return redirect()->route('home')->with('success', 'Report has been successfully submitted.');
-    }
-    
-
     // Memperbaruhi status is__verified
     public function isVerified(Report $report)
     {
@@ -120,9 +86,6 @@ class ReportController extends Controller
         $report->delete();
         return redirect()->route('admin.showAdminReport')->with('success', 'Report deleted successfully.');
     }
-
-
-
 
     // Mengatur item status
     // Memperbaruhi data sesuai item yang dipilih

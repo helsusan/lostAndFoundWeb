@@ -9,6 +9,7 @@ use DB;
 use Exception;
 use Illuminate\Http\Request;
 use Log;
+use Session;
 
 class MyReportController extends Controller
 {
@@ -19,6 +20,40 @@ class MyReportController extends Controller
 
         return view('myReports', compact('reports'));
     }
+
+    public function createMyReport() {
+        $locations = Location::orderBy('building')->get();
+        return view('user.form', ['locations' => $locations]);
+    }
+
+    public function insertMyReport(Request $request){
+        $request->validate([
+            'description' => 'required|string|max:1000',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'location' => 'required|exists:locations,id',
+            'location_lost' => 'required|string|max:255',
+            'time_lost' => 'required|date',
+        ]);
+
+        $timeFoundTimestamp = strtotime($request->time_lost);
+
+        $report = new Report;
+        $report->user_id = auth()->user()->id;
+        $report->report_status_id = 2;
+        $report->description = $request->description;
+        $report->image = $this->uploadImage($request);
+        $report->location_id = $request->location;
+        $report->location_lost = $request->location_lost;
+        $report->time_lost = date('Y-m-d H:i:s', $timeFoundTimestamp);
+        $report->save();
+
+        Session::flash('title', 'Report Berhasil Diinput!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
+
+        return redirect()->route('home')->with('success', 'Report has been successfully submitted.');
+    }
+
 
     // Form edit
     public function editMyReport(Report $report)
@@ -124,20 +159,18 @@ class MyReportController extends Controller
     }
 
     // Upload gambar
-    private function uploadImage(Request $request, $report)
+    private function uploadImage(Request $request, Report $report = null)
     {
         if ($request->hasFile('image')) {
-            // Hapus gambar lama jika ada
-            // if ($report->image) {
-            //     unlink(public_path($report->image));
-            // }
+            if ($report && $report->image && file_exists(public_path($report->image))) {
+                unlink(public_path($report->image));
+            }
 
-            // Simpan gambar baru
             $fileName = time() . '_' . $request->file('image')->getClientOriginalName();
-            $path = $request->file('image')->move(public_path('images'), $fileName);
+            $request->file('image')->move(public_path('images'), $fileName);
             return 'images/' . $fileName;
         }
 
-        return $report->image;
+        return $report ? $report->image : null;
     }
 }

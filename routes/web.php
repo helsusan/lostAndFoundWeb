@@ -21,9 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/reports/create', [ReportController::class, 'createUserReport'])->name('user.createReport');
-Route::post('/reports/insert', [ReportController::class, 'insertUserReport'])->name('user.insertReport');
-
 Route::get('/reports', [ReportController::class, 'showAdminReport'])->name('admin.showAdminReport');
 Route::put('/reports/verified/{report}', [ReportController::class, 'isVerified'])->name('admin.isVerified');
 Route::get('/reports/edit/{report}', [ReportController::class, 'editAdminReport'])->name('admin.editReport');
@@ -48,5 +45,7 @@ Route::get('/myreports/edit/{report}', [MyReportController::class, 'editMyReport
 Route::put('/myreports/update/{report}', [MyReportController::class, 'updateMyReport'])->name('myreport.updateReport');
 Route::put('/myreports/found/{id}', [MyReportController::class, 'foundReport'])->name('myreport.foundReport');
 Route::delete('/myreports/{report}', [MyReportController::class, 'deleteMyReport'])->name('myreport.deleteReport');
+Route::get('/myreports/create', [MyReportController::class, 'createMyReport'])->name('myreport.createReport');
+Route::post('/myreports/insert', [MyReportController::class, 'insertMyReport'])->name('myreport.insertReport');
 
 require __DIR__.'/auth.php';

@@ -18,7 +18,7 @@ class ItemController extends Controller
 
     public function createAdminItem(){
         $categories = ItemCategory::all();
-        $locations = Location::all();
+        $locations = Location::orderBy('building')->get();
 
         return view('admin.form', ['categories' => $categories, 'locations' => $locations]);
     }
