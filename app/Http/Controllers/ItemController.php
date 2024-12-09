@@ -57,28 +57,47 @@ class ItemController extends Controller
 
     public function editAdminItem(Item $item)
     {
-        return view('adminItemEdit', compact('item'));
+        $locations = Location::orderBy('building')->get();
+        $categories = ItemCategory::all();
+    
+        return view('adminItemEdit', compact('item', 'locations', 'categories'));
     }
+    
+    
 
     public function updateAdminItem(Request $request, Item $item)
     {
+        // Validasi data input
         $request->validate([
             'description' => 'required|string|max:255',
-            'location_found' => 'nullable|string|max:255',
+            'item_category_id' => 'required|exists:item_categories,id',
+            'location_found' => 'required|string|max:255',
             'time_found' => 'nullable|date',
-            'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048'
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
+    
+        // Perbarui gambar jika ada
+        if ($request->hasFile('image')) {
+            $imagePath = $this->uploadImage($request, $item);
+            $item->image = $imagePath;
+        }
+    
+        // Perbarui item
         $item->update([
-            'description' => $request->description,
+            'item_category_id' => $request->item_category_id,
             'location_found' => $request->location_found,
+            'description' => $request->description,
             'time_found' => $request->time_found ? \Illuminate\Support\Carbon::parse($request->time_found) : null,
-            'image' => $this->uploadImage($request, $item),
         ]);
-
-        return redirect()->route('admin.showAdminItem')
-                        ->with('success', 'Item updated successfully.');
+    
+        Session::flash('title', 'Item successfully updated!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
+    
+        return redirect()->route('admin.showAdminItem');
     }
+    
+    
 
     public function deleteAdminItem(Item $item)
     {
