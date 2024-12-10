@@ -58,20 +58,17 @@ class ItemController extends Controller
     public function editAdminItem(Item $item)
     {
         $locations = Location::orderBy('building')->get();
-        $categories = ItemCategory::all();
+        
+        return view('adminItemEdit', compact('item', 'locations'));
+    }    
     
-        return view('adminItemEdit', compact('item', 'locations', 'categories'));
-    }
-    
-    
-
     public function updateAdminItem(Request $request, Item $item)
     {
         // Validasi data input
         $request->validate([
             'description' => 'required|string|max:255',
-            'item_category_id' => 'required|exists:item_categories,id',
-            'location_found' => 'required|string|max:255',
+            'location_found' => 'required|exists:locations,id',
+            'location_detail' => 'nullable|string|max:255',
             'time_found' => 'nullable|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
@@ -84,8 +81,8 @@ class ItemController extends Controller
     
         // Perbarui item
         $item->update([
-            'item_category_id' => $request->item_category_id,
-            'location_found' => $request->location_found,
+            'location_id' => $request->location_found,
+            'location_found' => $request->location_detail,
             'description' => $request->description,
             'time_found' => $request->time_found ? \Illuminate\Support\Carbon::parse($request->time_found) : null,
         ]);
@@ -96,8 +93,6 @@ class ItemController extends Controller
     
         return redirect()->route('admin.showAdminItem');
     }
-    
-    
 
     public function deleteAdminItem(Item $item)
     {

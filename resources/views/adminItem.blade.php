@@ -22,6 +22,7 @@
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Item Category</th>
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Description</th>
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Location Found</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Location Detail</th>
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Time Found</th>
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Status</th>
                     <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Item Status</th>
@@ -51,7 +52,15 @@
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->name ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->itemCategory->name ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->description ?? 'N/A' }}</td>
-                        <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->location_found ?? 'N/A' }}</td>
+                        <!-- Column for Location Detail (from Location Relationship) -->
+                        <td class="py-4 px-6 @if($loop->odd) text-[#003366] @else text-white @endif font-medium text-center">
+                            {{ $item->location->name ?? 'N/A' }} - {{ $item->location->building ?? 'N/A' }}
+                        </td>
+                        <!-- Column for Location Found (from User Input) -->
+                        <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">
+                            {{ $item->location_found ?? 'N/A' }}
+                        </td>
+
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->time_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->status ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center">
