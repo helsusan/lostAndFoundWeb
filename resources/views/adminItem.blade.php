@@ -4,8 +4,8 @@
 
 <h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">LIST ITEMS</h1>
 
-<div class="text-right my-5 mr-4">
-    <a href="{{ route('admin.createItem') }}" class="bg-[#133E87] hover:bg-[#0a2a60] text-white font-bold py-2 px-4 rounded">
+<div class="text-right my-5 mr-20">
+    <a href="{{ route('admin.createItem') }}" class="bg-[#3b6fa5] hover:bg-[#285a87] text-white font-bold py-2 px-4 rounded">
         Add New Item
     </a>
 </div>
@@ -15,18 +15,18 @@
         <table class="min-w-full table-auto border-collapse">
             <thead>
                 <tr class="bg-[#133E87] text-left text-white">
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">ID</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Image</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Owner</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Item Name</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Item Category</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Description</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Location Found</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Location Detail</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Time Found</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Status</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Item Status</th>
-                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center">Action</th>
+                <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">ID</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Image</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Owner</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Item Name</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Item Category</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Description</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Location Found</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Location Detail</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Time Found</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Status</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Item Status</th>
+                    <th class="w-1/12 py-4 px-6 text-sm font-bold uppercase text-center border-b">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,25 +38,24 @@
                     </tr>
                 @else
                     @foreach($items as $item)
-                    <tr class="@if($loop->even) bg-[#133E87] @else bg-[#a9c6ff] @endif hover:bg-[#5A9BCF]">
+                    <tr class="@if($loop->even) bg-[#133E87] @else bg-[#a9c6ff] @endif hover:bg-[#5A9BCF] border-b @if($loop->last) border-0 @endif" style="height: 170px;">
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->id }}</td>
-                        <td class="py-4 px-6 text-center" style="width: 150px; height: 150px;">
+                        <td class="py-4 px-6 text-center align-middle" style="width: 150px; height: 150px;">
                             @if ($item->image)
-                                <img src="{{ asset($item->image) }}" alt="Image" class="rounded-lg cursor-pointer w-full h-full object-contain"
+                                <img src="{{ asset($item->image) }}" alt="Image" class="rounded-lg cursor-pointer max-w-[120px] max-h-[120px] mx-auto object-contain"
                                     onclick="showModal('{{ asset($item->image) }}')">
                             @else
                                 N/A
                             @endif
                         </td>
+
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->user->name ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->name ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->itemCategory->name ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->description ?? 'N/A' }}</td>
-                        <!-- Column for Location Detail (from Location Relationship) -->
                         <td class="py-4 px-6 @if($loop->odd) text-[#003366] @else text-white @endif font-medium text-center">
                             {{ $item->location->name ?? 'N/A' }} - {{ $item->location->building ?? 'N/A' }}
                         </td>
-                        <!-- Column for Location Found (from User Input) -->
                         <td class="py-4 px-6 text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">
                             {{ $item->location_found ?? 'N/A' }}
                         </td>
@@ -71,7 +70,7 @@
                             </select>
                         </td>
                         <td class="py-4 px-6 text-center flex flex-col space-y-2">
-                            <a href="{{ route('admin.editItem', $item->id) }}" class="flex items-center justify-start bg-[#f3cf56] hover:bg-[#e6be40] text-white px-4 py-2 rounded font-bold">
+                            <a href="{{ route('admin.editItem', $item->id) }}" class="flex items-center justify-start bg-[#f3cf56] hover:bg-[#e6be40] text-white px-4 py-2 rounded font-bold mt-6">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931ZM18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
                                 </svg>
@@ -96,6 +95,7 @@
         </table>
     </div>
 </div>
+
 
 <!-- Modal -->
 <div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
