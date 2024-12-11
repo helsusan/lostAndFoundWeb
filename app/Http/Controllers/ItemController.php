@@ -13,6 +13,12 @@ class ItemController extends Controller
     public function showAdminItem()
     {
         $items = Item::with(['location', 'itemStatus', 'user', 'itemCategory'])->get();
+
+        $items = $items->map(function ($item) {
+            $item->time_found = \Carbon\Carbon::parse($item->time_found)->format('d-m-y H:i:s');
+            return $item;
+        });
+
         return view('adminItem', compact('items'));
     }
 
