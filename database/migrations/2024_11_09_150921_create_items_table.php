@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('items', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->foreignId("user_id")->nullable()->constrained();
             $table->foreignId("item_category_id")->constrained();
             $table->foreignId("location_id")->constrained();
             $table->foreignId("item_status_id")->constrained();
