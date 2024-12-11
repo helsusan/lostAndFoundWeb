@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     protected $fillable = [
-        'user_id',
         'item_category_id',
         'location_id',
         'item_status_id',
@@ -33,4 +32,9 @@ class Item extends Model
     public function report(){
         return $this->belongsTo(Report::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }    
 }

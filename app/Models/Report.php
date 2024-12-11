@@ -29,8 +29,9 @@ class Report extends Model
         return $this->belongsTo(Location::class);
     }
 
-    public function item(){
-        return $this->hasOne(Item::class);
+    public function item()
+    {
+        return $this->belongsTo(Item::class);
     }
 
     public function user(){
