@@ -30,7 +30,7 @@ class Report extends Model
     }
 
     public function item(){
-        return $this->belongsTo(Item::class);
+        return $this->hasOne(Item::class);
     }
 
     public function user(){

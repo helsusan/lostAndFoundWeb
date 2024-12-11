@@ -31,10 +31,6 @@ class Item extends Model
     }
 
     public function report(){
-        return $this->hasOne(Report::class);
-    }
-
-    public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(Report::class);
     }
 }
