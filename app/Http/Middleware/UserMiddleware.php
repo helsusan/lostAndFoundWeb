@@ -28,7 +28,7 @@ class UserMiddleware
         }
 
         if($userRole == 2){
-            return redirect()->route('dashboard');
+            return redirect()->route('home');
         }
     }
 }
