@@ -15,7 +15,6 @@ class ItemSeeder extends Seeder
     {
         DB::table('items')->insert([
             [
-                'user_id'=> null,
                 'item_category_id' => 1,
                 'location_id' => 1,
                 'item_status_id' => 2,
@@ -28,7 +27,6 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'user_id'=> null,
                 'item_category_id' => 2,
                 'location_id' => 2,
                 'item_status_id' => 2,
@@ -41,7 +39,6 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'user_id'=> null,
                 'item_category_id' => 2,
                 'location_id' => 2,
                 'item_status_id' => 2,
@@ -54,7 +51,6 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'user_id'=> null,
                 'item_category_id' => 2,
                 'location_id' => 2,
                 'item_status_id' => 2,
@@ -67,7 +63,6 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'user_id'=> null,
                 'item_category_id' => 2,
                 'location_id' => 2,
                 'item_status_id' => 2,
@@ -80,7 +75,6 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'user_id'=> null,
                 'item_category_id' => 2,
                 'location_id' => 2,
                 'item_status_id' => 2,
