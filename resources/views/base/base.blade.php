@@ -7,23 +7,23 @@
       <title>Lost And Found</title>
       @vite(['resources/css/app.css', 'resources/js/app.js'])
       <style>
-          body {
-              background-color: #E4F2F5;
-          }
+            body {
+                background-color: #E4F2F5;
+            }
 
-          .found {
-              background-color: #59b23a;
-              color: white;
-              border-radius: 5px;
-              padding: 4px 8px;
-          }
+            .found {
+                background-color: #59b23a;
+                color: white;
+                border-radius: 5px;
+                padding: 4px 8px;
+            }
 
-          .notfound {
-              background-color: #80898f;
-              color: white;
-              border-radius: 5px;
-              padding: 4px 8px;
-          }
+            .notfound {
+                background-color: #80898f;
+                color: white;
+                border-radius: 5px;
+                padding: 4px 8px;
+            }
       </style>
         <!-- SweetAlert2 -->
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

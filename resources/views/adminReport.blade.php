@@ -3,22 +3,28 @@
 @section('content')
 
 <style>
-    div.dataTables_wrapper div.dataTables_length select {
-        width: 100px !important;
-    }
-
-    table tr:nth-child(odd) td {
+    tr:nth-child(odd) td {
         background-color: #a9c6ff;
         color: #003366;
     }
-    table tr:nth-child(even) td {
+
+    tr:hover td {
+        background-color: #5A9BCF;
+    }
+
+    tr:nth-child(even) td {
         background-color: #133E87;
         color: #ffffff;
+    }
+
+    tr:nth-child(even):hover td {
+        background-color: #5A9BCF;
     }
 
     .rounded-lg {
         overflow: hidden; 
     }
+
 </style>
 
 <h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">REPORT REQUEST</h1>
