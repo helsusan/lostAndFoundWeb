@@ -63,7 +63,7 @@
 
     <!-- Back Button -->
     <div class="text-center my-6">
-        <a href="{{ route('admin.showAdminReport') }}" class="bg-[#f25c5c] text-white px-6 py-3 rounded-lg hover:bg-[#d94a4a] font-semibold transition-all">
+        <a href="{{ route('admin.showAdminReport') }}" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-all">
             Back
         </a>
     </div>

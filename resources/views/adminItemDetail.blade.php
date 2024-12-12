@@ -15,7 +15,7 @@
         <p class="text-[#133E87] mt-2 font-bold">Time Found: <span class="font-normal">{{ $item->time_found ?? 'N/A' }}</span></p>
 
         <div class="mt-6 flex justify-end gap-4">
-            <a href="{{ route('admin.showAdminReport') }}" class="bg-[#f25c5c] text-white px-6 py-3 rounded-lg hover:bg-[#d94a4a] font-semibold transition-all">
+            <a href="{{ route('admin.showAdminReport') }}" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-all">
                 Back
             </a>
         </div>
