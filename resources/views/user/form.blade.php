@@ -25,7 +25,7 @@
                         accept="image/*" required>
                 </div>
 
-                <!-- Location Found -->
+                <!-- Location Lost-->
                 <div>
                     <label for="location" class="block mb-2 text-sm font-medium">Location Lost</label>
                     <select name="location" id="location" 
@@ -37,7 +37,7 @@
                     </select>
                 </div>
 
-                <!-- Detail Location Found -->
+                <!-- Detail Location Lost -->
                 <div>
                     <label for="location_lost" class="block mb-2 text-sm font-medium">Detail Location Lost</label>
                     <input type="text" name="location_lost" id="location_lost" 
@@ -45,7 +45,7 @@
                         placeholder="e.g., Table 5, near entrance" required>
                 </div>
 
-                <!-- Time Found -->
+                <!-- Time Lost -->
                 <div>
                     <label for="time_lost" class="block mb-2 text-sm font-medium">Time Lost</label>
                     <input type="datetime-local" name="time_lost" id="time_lost" 

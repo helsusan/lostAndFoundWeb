@@ -34,10 +34,11 @@
         <!-- Carousel -->
         <h1 class="bg-[#133E87] text-2xl font-bold text-white mb-4 mt-4 h-20 text-center pt-6 rounded-t-lg">ANNOUNCEMENTS</h1>
         <div class="swiper mySwiper flex bg-[#a9c6ff] -mt-4 rounded-b-lg">
-            <div class="swiper-wrapper flex justify-center items-center mt-10 mb-12">
                 @if($verifiedReports->isEmpty())
+                <div class="swiper-wrapper flex mt-10 mb-12 justify-center item-center">
                     <p class="text-gray-500 text-center">No verified reports found.</p>
                 @else
+                <div class="swiper-wrapper flex mt-10 mb-12">
                     @foreach($verifiedReports->chunk(3) as $chunk)
                     <div class="swiper-slide">
                         <div class="grid grid-cols-2 md:grid-cols-3 gap-1">

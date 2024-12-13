@@ -82,8 +82,33 @@
         </div>
     </div>
 
-    <!-- Responsive Navigation Menu -->
+   <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <!-- Responsive Navigation Links -->
+        <div class="space-y-1">
+            <x-responsive-nav-link :href="route('home')" :active="request()->routeIs('home')">
+                {{ __('Home') }}
+            </x-responsive-nav-link>
+
+            @can('create-report')
+            <x-responsive-nav-link :href="route('myreport.showReports')" :active="request()->routeIs('myreport.showReports')">
+                {{ __('Report') }}
+            </x-responsive-nav-link>
+            @endcan
+
+            @can('verify-report')
+            <x-responsive-nav-link :href="route('admin.showAdminReport')" :active="request()->routeIs('admin.showAdminReport')">
+                {{ __('Report') }}
+            </x-responsive-nav-link>
+            @endcan
+
+            @can('create-item')
+            <x-responsive-nav-link :href="route('admin.showAdminItem')" :active="request()->routeIs('admin.showAdminItem')">
+                {{ __('Item') }}
+            </x-responsive-nav-link>
+            @endcan
+        </div>
+
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
             <div class="px-4">
