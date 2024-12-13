@@ -24,6 +24,20 @@
     .rounded-lg {
         overflow: hidden; 
     }
+
+    .found {
+        background-color: #59b23a;
+        color: white;
+        border-radius: 5px;
+        padding: 4px 8px;
+    }
+
+    .notfound {
+        background-color: #80898f;
+        color: white;
+        border-radius: 5px;
+        padding: 4px 8px;
+    }
 </style>
 
 
