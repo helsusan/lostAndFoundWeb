@@ -11,8 +11,7 @@
             <h2 class="mb-6 text-2xl font-bold text-center">EDIT ITEM</h2>
             
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-
-            <!-- Description Field -->
+            <!-- deskripsi item -->
             <div class="md:col-span-2">
                 <label for="description" class="block mb-2 text-sm font-medium">Description</label>
                 <textarea id="description" name="description" rows="4"
@@ -20,7 +19,7 @@
                     required>{{ old('description', $item->description) }}</textarea>
             </div>
 
-            <!-- Location Found -->
+            <!-- lokasi ditemukannya item tersebut -->
             <div class="col-span-1 md:col-span-1">
                 <label for="location_found" class="block mb-2 text-sm font-medium">Location Found</label>
                 <select name="location_found" id="location_found" 
@@ -34,7 +33,7 @@
                 </select>
             </div>
 
-            <!-- Location Detail -->
+            <!-- detail lokasi -->
             <div class="col-span-1 md:col-span-1">
                 <label for="location_detail" class="block mb-2 text-sm font-medium">Location Detail</label>
                 <input type="text" id="location_detail" name="location_detail" 
@@ -42,7 +41,7 @@
                     value="{{ old('location_detail', $item->location_found) }}">
             </div>
 
-            <!-- Image Upload Field -->
+            <!-- upload image -->
             <div>
                 <label for="image" class="block mb-2 text-sm font-medium">Upload Image</label>
                 <input type="file" id="image" name="image" 
@@ -55,7 +54,7 @@
                 @endif
             </div>
 
-            <!-- Found Time Field -->
+            <!-- waktu ditemukannya item tersebut -->
             <div>
                 <label for="time_found" class="block mb-2 text-sm font-medium">Found Time</label>
                 <input type="datetime-local" id="time_found" name="time_found" 
@@ -64,13 +63,14 @@
             </div>
         </div>
 
-
-            <!-- Action Buttons -->
+            <!-- button -->
             <div class="flex justify-center gap-4">
+                <!-- cancel -->
                 <a href="{{ route('admin.showAdminItem') }}" 
                     class="bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:ring-4 focus:outline-none focus:ring-red-300">
                     Cancel
                 </a>
+                <!-- save -->
                 <button type="submit" 
                     class="bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg text-sm px-5 py-2.5 focus:ring-4 focus:outline-none focus:ring-green-300">
                     Save Changes
