@@ -43,7 +43,7 @@
         
         <p class="text-[#133E87] mt-2"><strong>Description:</strong> {{ $report->description }} </span></p>
         <p class="text-[#133E87] mt-2"><strong>Detail Location:</strong> {{ $report->location_lost }}</p>
-        <p class="text-[#133E87] mt-2"><strong>Time Lost:</strong> {{ $report->time_lost }}</p>
+        <p class="text-[#133E87] mt-2"><strong>Time Lost:</strong> {{ \Carbon\Carbon::parse($report->time_lost)->format('d-m-Y H:i:s') }}</p>
     </div>
 
     <!-- Item Table -->
@@ -70,7 +70,9 @@
                     <td class="py-4 px-6 border-b text-left font-medium">{{ $item->itemCategory->name ?? 'N/A' }}</td>
                     <td class="py-4 px-6 border-b text-left font-medium">{{ $item->description }}</td>
                     <td class="py-4 px-6 border-b text-left font-medium">{{ $item->location_found ?? 'N/A' }}</td>
-                    <td class="py-4 px-6 border-b text-left font-medium">{{ $item->time_found ?? 'N/A' }}</td>
+                    <td class="py-4 px-6 border-b text-left font-medium">
+                        {{ \Carbon\Carbon::parse($item->time_found)->format('d-m-Y H:i:s') ?? 'N/A' }}
+                    </td>
                     <td class="py-4 px-6 border-b text-center">
                         <form action="{{ route('admin.assignItemToReport', $report->id) }}" method="POST">
                             @csrf

@@ -12,7 +12,7 @@
         <p class="text-[#133E87] mt-2 font-bold">Category:  <span class="font-normal">{{ $item->itemCategory->name ?? 'N/A' }}</span></p>
         <p class="text-[#133E87] mt-2 font-bold">Description: <span class="font-normal">{{ $item->description }}</span></p>
         <p class="text-[#133E87] mt-2 font-bold">Location Found: <span class="font-normal">{{ $item->location_found ?? 'N/A' }}</span></p>
-        <p class="text-[#133E87] mt-2 font-bold">Time Found: <span class="font-normal">{{ $item->time_found ?? 'N/A' }}</span></p>
+        <p class="text-[#133E87] mt-2 font-bold">Time Found: <span class="font-normal">{{ \Carbon\Carbon::parse($item->time_found)->format('d-m-Y H:i:s') ?? 'N/A' }}</span></p>
         <p class="text-[#133E87] mt-2 font-bold">Status: <span class="font-normal">{{ $item->ItemStatus->name ?? 'N/A' }}</span></p>
 
         <div class="mt-6 flex justify-end gap-4">
