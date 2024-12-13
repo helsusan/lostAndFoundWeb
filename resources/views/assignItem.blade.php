@@ -2,6 +2,31 @@
 
 @section('content')
 
+<style>
+    tr:nth-child(odd) td {
+        background-color: #a9c6ff;
+        color: #003366;
+    }
+
+    tr:hover td {
+        background-color: #5A9BCF;
+    }
+
+    tr:nth-child(even) td {
+        background-color: #133E87;
+        color: #ffffff;
+    }
+
+    tr:nth-child(even):hover td {
+        background-color: #5A9BCF;
+    }
+
+    .rounded-lg {
+        overflow: hidden; 
+    }
+
+</style>
+
 <h1 class="text-center font-bold text-4xl my-10 text-[#133E87]">ASSIGN ITEM TO REPORT</h1>
 
 <div class="shadow-lg rounded-lg overflow-hidden mx-6 md:mx-24 my-10 bg-[#f0f8ff]"> 
@@ -23,7 +48,7 @@
 
     <!-- Item Table -->
     <div class="overflow-x-auto px-6 md:px-12 mb-5"> 
-        <table class="min-w-full table-auto border-collapse rounded-lg overflow-hidden">
+        <table id="Table" class="min-w-full table-auto border-collapse rounded-lg">
             <thead>
                 <tr class="bg-[#133E87] text-left text-white"> 
                     <th class="w-1/6 py-4 px-6 border-b text-sm font-bold uppercase text-center rounded-tl-lg">Image</th>
@@ -37,15 +62,15 @@
             </thead>
             <tbody>
                 @foreach($items as $item)
-                <tr class="@if($loop->even) bg-[#133E87] @else bg-[#a9c6ff] @endif">
+                <tr class="">
                     <td class="py-4 px-6 border-b text-center">
                         <img src="{{ asset($item->image) }}" alt="Item Image" class="w-16 h-16 rounded-lg mx-auto">
                     </td>
-                    <td class="py-4 px-6 border-b text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->name }}</td>
-                    <td class="py-4 px-6 border-b text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->itemCategory->name ?? 'N/A' }}</td>
-                    <td class="py-4 px-6 border-b text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->description }}</td>
-                    <td class="py-4 px-6 border-b text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->location_found ?? 'N/A' }}</td>
-                    <td class="py-4 px-6 border-b text-center @if($loop->odd) text-[#003366] @else text-white @endif font-medium">{{ $item->time_found ?? 'N/A' }}</td>
+                    <td class="py-4 px-6 border-b text-left font-medium">{{ $item->name }}</td>
+                    <td class="py-4 px-6 border-b text-left font-medium">{{ $item->itemCategory->name ?? 'N/A' }}</td>
+                    <td class="py-4 px-6 border-b text-left font-medium">{{ $item->description }}</td>
+                    <td class="py-4 px-6 border-b text-left font-medium">{{ $item->location_found ?? 'N/A' }}</td>
+                    <td class="py-4 px-6 border-b text-left font-medium">{{ $item->time_found ?? 'N/A' }}</td>
                     <td class="py-4 px-6 border-b text-center">
                         <form action="{{ route('admin.assignItemToReport', $report->id) }}" method="POST">
                             @csrf
@@ -69,6 +94,13 @@
     </div>
 </div>
 
+<script>
+    $('#Table').DataTable({
+        columnDefs: [
+            { orderable: false, targets: [0] }, 
+        ],
+    });
+</script>
 
 
 @endsection

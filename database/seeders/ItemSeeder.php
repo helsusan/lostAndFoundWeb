@@ -34,7 +34,7 @@ class ItemSeeder extends Seeder
                 'description' => 'Pencil Case, blue color.',
                 'location_found' => 'Lab SI Gedung P',
                 'time_found' => now(),
-                'image' => 'images/1733508029_PencilCase.jpg', // Gambar placeholder
+                'image' => 'images/Tepak_Pensil_2.jpg', // Gambar placeholder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -46,7 +46,7 @@ class ItemSeeder extends Seeder
                 'description' => 'Pencil Case, blue color.',
                 'location_found' => 'Lab SI Gedung P',
                 'time_found' => now(),
-                'image' => 'images/1733508029_PencilCase.jpg', // Gambar placeholder
+                'image' => 'images/Tepak_Pensil_2.jpg', // Gambar placeholder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -58,7 +58,7 @@ class ItemSeeder extends Seeder
                 'description' => 'Pencil Case, blue color.',
                 'location_found' => 'Lab SI Gedung P',
                 'time_found' => now(),
-                'image' => 'images/1733508029_PencilCase.jpg', // Gambar placeholder
+                'image' => 'images/Tepak_Pensil_2.jpg', // Gambar placeholder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -70,7 +70,7 @@ class ItemSeeder extends Seeder
                 'description' => 'Pencil Case, blue color.',
                 'location_found' => 'Lab SI Gedung P',
                 'time_found' => now(),
-                'image' => 'images/1733508029_PencilCase.jpg', // Gambar placeholder
+                'image' => 'images/Tepak_Pensil_2.jpg', // Gambar placeholder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
@@ -82,7 +82,7 @@ class ItemSeeder extends Seeder
                 'description' => 'Pencil Case, blue color.',
                 'location_found' => 'Lab SI Gedung P',
                 'time_found' => now(),
-                'image' => 'images/1733508029_PencilCase.jpg', // Gambar placeholder
+                'image' => 'images/Tepak_Pensil_2.jpg', // Gambar placeholder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
