@@ -1,4 +1,54 @@
-<div class="bg-white dark:bg-gray-800 border-b border-gray-100 dark:border-gray-700 text-white text-center py-6 mt-12">
-        <p class="text-sm">"Lost something? Found an item? Let's reconnect people and their belongings. Contact us to report or search for lost items."</p>
-        <p class="text-sm mt-2">Address: Lorem Street | Phone Number: 123-456-789</p>
+<!-- Footer -->
+<div class="bg-blue-900 text-white text-center py-8">
+    <div class="max-w-screen-xl mx-auto px-6">
+        <!-- Footer Top -->
+        <div class="text-center mb-8">
+                <p class="text-lg font-semibold mb-4">
+                        “Lost something? Found an item? Let’s reconnect people and their belongings. <br />
+                        Contact us to report or search for lost items.”
+                </p>
+                <div class="flex justify-center mb-4">
+                        <div class="bg-white text-blue-800 rounded-full p-3">
+                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8" />
+                                <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                        </svg>
+                        </div>
+                </div>
+                <div class="font-semibold">
+                        <p class="mb-2">Address: Lala Street</p>
+                        <p>Phone Number: 123456789</p>
+                </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="flex flex-col items-center lg:flex-row lg:items-center lg:justify-between">
+            <span class="text-sm text-white mb-3 lg:mb-0 lg:text-center">©2024 LOST AND FOUND, All rights reserved</span>
+             <!-- Icon Social Media -->
+             <div class="flex space-x-4 mt-4 lg:mt-4 lg:ml-4">
+                     <a class="w-9 h-9 rounded-full bg-blue-950 flex justify-center items-center hover:bg-red-600" href="#">
+                             <svg class="w-[1.25rem] h-[0.875rem] text-white" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path fill-rule="evenodd" clip-rule="evenodd" d="M13.9346 1.13529C14.5684 1.30645 15.0665 1.80588 15.2349 2.43896C15.5413 3.58788 15.5413 5.98654 15.5413 5.98654C15.5413 5.98654 15.5413 8.3852 15.2349 9.53412C15.0642 10.1695 14.5661 10.669 13.9346 10.8378C12.7886 11.1449 8.19058 11.1449 8.19058 11.1449C8.19058 11.1449 3.59491 11.1449 2.44657 10.8378C1.81277 10.6666 1.31461 10.1672 1.14622 9.53412C0.839844 8.3852 0.839844 5.98654 0.839844 5.98654C0.839844 5.98654 0.839844 3.58788 1.14622 2.43896C1.31695 1.80353 1.81511 1.30411 2.44657 1.13529C3.59491 0.828125 8.19058 0.828125 8.19058 0.828125C8.19058 0.828125 12.7886 0.828125 13.9346 1.13529ZM10.541 5.98654L6.72178 8.19762V3.77545L10.541 5.98654Z" fill="currentColor"/>
+                             </svg> 
+                     </a>
+                     <a class="w-9 h-9 rounded-full bg-blue-950 flex justify-center items-center hover:bg-blue-500" href="#">
+                             <svg class="w-[1.25rem] h-[1.25rem] text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path d="M23.953 4.57c-.885.39-1.83.654-2.825.774a4.904 4.904 0 0 0 2.14-2.72c-.946.56-1.99.968-3.1 1.184a4.905 4.905 0 0 0-8.36 4.48A13.923 13.923 0 0 1 1.67 3.149a4.893 4.893 0 0 0 1.523 6.552c-.832-.027-1.616-.255-2.309-.634v.063a4.907 4.907 0 0 0 3.945 4.814c-.683.186-1.388.286-2.117.286-.517 0-1.026-.05-1.516-.148a4.906 4.906 0 0 0 4.588 3.416A9.85 9.85 0 0 1 1.16 21.23a9.917 9.917 0 0 1-1.17-.068 13.868 13.868 0 0 0 7.548 2.212c9.052 0 14.007-7.502 14.007-14.007 0-.215-.004-.429-.014-.642A10.05 10.05 0 0 0 24 5.64a9.938 9.938 0 0 1-2.847.779z" fill="currentColor"/>
+                             </svg>
+                     </a>
+                     <a class="w-9 h-9 rounded-full bg-blue-950 flex justify-center items-center hover:bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
+                             <svg class="w-[1.25rem] h-[1.25rem] text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path fill-rule="evenodd"
+                             d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z"
+                             clip-rule="evenodd" fill="currentColor"></path>
+                             </svg>
+                     </a>
+                     <a class="w-9 h-9 rounded-full bg-blue-950 flex justify-center items-center hover:bg-indigo-600">
+                             <svg class="w-[1.25rem] h-[1.25rem] text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                             <path d="M22.225 0H1.775C.794 0 0 .796 0 1.775v20.45C0 23.204.794 24 1.775 24h20.45c.981 0 1.775-.796 1.775-1.775V1.775C24 .796 23.206 0 22.225 0zm-14.195 20.452h-3.743v-10.8h3.743v10.8zm-1.872-12.389c-1.221 0-2.23-.998-2.23-2.235 0-1.241 1.012-2.239 2.235-2.239 1.225 0 2.235 1.005 2.235 2.239 0 1.237-1.01 2.235-2.235 2.235zm15.098 12.389h-3.741v-5.45c0-1.302-.026-2.982-1.819-2.982-1.82 0-2.101 1.426-2.101 2.896v5.536h-3.743v-10.8h3.596v1.48h.051c.497-.942 1.707-1.936 3.511-1.936 3.76 0 4.451 2.471 4.451 5.678v6.577z" fill="currentColor"/>
+                             </svg>
+                     </a>
+             </div>
+        </div>
+    </div>
 </div>
