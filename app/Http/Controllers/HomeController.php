@@ -9,38 +9,36 @@ use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
+    // menampilkan halaman home dengan data lengkap
     public function index(Request $request)
     {
-        // Menampilkan laporan yang sudah diverifikasi
+        // menampilkan laporan yang sudah diverifikasi
         $verifiedReports = Report::where('is_verified', 1)
             ->with(['user', 'location'])
             ->get();
 
-        // Mengambil semua kategori barang
         $categories = ItemCategory::all();
 
-        // Filter berdasarkan kategori jika ada
-        $query = Item::where('item_status_id', 2) // Status untuk Lost Goods
+        // filter berdasarkan kategori jika ada
+        $query = Item::where('item_status_id', 2) // status pending
             ->with(['user', 'location', 'itemCategory']);
         
-        // Jika ada kategori yang dipilih
         if ($request->has('category') && $request->category != '') {
             $query->where('item_category_id', $request->category);
         }
 
-        // Menampilkan item Lost Goods setelah filter
+        // menampilkan item Lost Goods setelah filter
         $lostGoodsItems = $query->get();
 
-        // Menampilkan semua laporan
+        // menampilkan semua laporan
         $reports = Report::with(['user', 'item', 'location', 'reportStatus'])->get();
 
         return view('home', compact('verifiedReports', 'reports', 'lostGoodsItems', 'categories'));
     }
 
-    // Fetch reports yang sudah diverifikasi
+    // fetch laporan yang sudah diverifikasi
     public function fetchVerifiedReports()
     {
-        // Mengambil laporan yang diverifikasi
         $verifiedReports = Report::where('is_verified', 1)
             ->with(['user', 'location'])
             ->get();
@@ -48,17 +46,18 @@ class HomeController extends Controller
         return response()->json($verifiedReports);
     }
 
-    // Fetch Lost Goods
+    // fetch Lost Goods
     public function fetchLostGoods(Request $request)
     {
-        $query = Item::where('item_status_id', 2) // Status Pending
+        $query = Item::where('item_status_id', 2) // status pending
             ->with(['user', 'location', 'itemCategory']);
 
-        // Filter berdasarkan kategori jika ada
+        // filter berdasarkan kategori jika ada
         if ($request->has('category') && $request->category != '') {
             $query->where('item_category_id', $request->category);
         }
 
+        // mengambil data Lost Goods
         $lostGoodsItems = $query->get();
 
         return response()->json($lostGoodsItems);
