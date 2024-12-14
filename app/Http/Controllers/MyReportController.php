@@ -30,33 +30,55 @@ class MyReportController extends Controller
     }
 
     public function insertMyReport(Request $request){
-        $request->validate([
-            'description' => 'required|string|max:1000',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'location' => 'required|exists:locations,id',
-            'location_lost' => 'required|string|max:255',
-            'time_lost' => 'required|date',
-        ]);
+        try {
+            $request->validate([
+                'description' => 'required|string|max:1000',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'location' => 'required|exists:locations,id',
+                'location_lost' => 'required|string|max:255',
+                'time_lost' => 'required|date',
+            ],[
+                'description.required' => 'Deskripsi wajib diisi.',
+                'description.string' => 'Deskripsi harus berupa teks.',
+                'description.max' => 'Deskripsi tidak boleh lebih dari 1000 karakter.',
+                'image.required' => 'Gambar wajib diunggah.',
+                'image.image' => 'File yang diunggah harus berupa gambar.',
+                'image.mimes' => 'Gambar harus memiliki format jpeg, png, jpg, atau gif.',
+                'image.max' => 'Ukuran gambar tidak boleh lebih dari 2MB.',
+                'location.required' => 'Lokasi wajib dipilih.',
+                'location.exists' => 'Lokasi yang dipilih tidak valid.',
+                'location_lost.required' => 'Lokasi detail wajib diisi.',
+                'location_lost.string' => 'Lokasi detail harus berupa teks.',
+                'location_lost.max' => 'Lokasi detail tidak boleh lebih dari 255 karakter.',
+                'time_lost.required' => 'Waktu kehilangan wajib diisi.',
+                'time_lost.date' => 'Format waktu kehilangan tidak valid.',
+            ]);
 
-        $timeFoundTimestamp = strtotime($request->time_lost);
+            $timeFoundTimestamp = strtotime($request->time_lost);
 
-        $report = new Report;
-        $report->user_id = auth()->user()->id;
-        $report->report_status_id = 2;
-        $report->description = $request->description;
-        $report->image = $this->uploadImage($request);
-        $report->location_id = $request->location;
-        $report->location_lost = $request->location_lost;
-        $report->time_lost = date('Y-m-d H:i:s', $timeFoundTimestamp);
-        $report->save();
+            $report = new Report;
+            $report->user_id = auth()->user()->id;
+            $report->report_status_id = 2;
+            $report->description = $request->description;
+            $report->image = $this->uploadImage($request);
+            $report->location_id = $request->location;
+            $report->location_lost = $request->location_lost;
+            $report->time_lost = date('Y-m-d H:i:s', $timeFoundTimestamp);
+            $report->save();
 
-        Session::flash('title', 'Report Berhasil Diinput!');
-        Session::flash('message', '');
-        Session::flash('icon', 'success');
+            Session::flash('title', 'Report Berhasil Diinput!');
+            Session::flash('message', '');
+            Session::flash('icon', 'success');
 
-        return redirect()->route('home')->with('success', 'Report has been successfully submitted.');
+            return redirect()->route('home')->with('success', 'Report has been successfully submitted.');
+        } catch (Exception $e) {
+            Session::flash('title', 'Error!');
+            Session::flash('message', 'Terjadi kesalahan saat menginput report.');
+            Session::flash('icon', 'error');
+    
+            return redirect()->back()->withInput();
+        }
     }
-
 
     public function editMyReport(Report $report)
     {

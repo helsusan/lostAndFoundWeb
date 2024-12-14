@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\Location;
+use Exception;
 use Illuminate\Http\Request;
 use Session;
 
@@ -31,34 +32,57 @@ class ItemController extends Controller
 
     public function insertAdminItem(Request $request)
     {
-        $request->validate([
-            'item' => 'required|string|max:255',
-            'category' => 'required|exists:item_categories,id',
-            'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'location' => 'required|exists:locations,id',
-            'detail_location' => 'required|string|max:255',
-            'time_found' => 'required|date',
-        ]);
+        try {
+            $request->validate([
+                'item' => 'required|string|max:255',
+                'category' => 'required|exists:item_categories,id',
+                'description' => 'required|string',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+                'location' => 'required|exists:locations,id',
+                'detail_location' => 'required|string|max:255',
+                'time_found' => 'required|date',
+            ],[
+                'item.required' => 'Nama item harus diisi.',
+                'item.string' => 'Nama item harus berupa teks.',
+                'category.required' => 'Kategori harus dipilih.',
+                'category.exists' => 'Kategori tidak valid.',
+                'description.required' => 'Deskripsi harus diisi.',
+                'image.required' => 'Gambar harus diunggah.',
+                'image.image' => 'File yang diunggah harus berupa gambar.',
+                'image.mimes' => 'Gambar harus berformat jpeg, png, jpg, atau gif.',
+                'image.max' => 'Ukuran gambar maksimal 2MB.',
+                'location.required' => 'Lokasi harus dipilih.',
+                'location.exists' => 'Lokasi tidak valid.',
+                'detail_location.required' => 'Detail lokasi harus diisi.',
+                'time_found.required' => 'Waktu ditemukan harus diisi.',
+                'time_found.date' => 'Waktu ditemukan harus berupa tanggal yang valid.',
+            ]);
+
+            $timeFoundTimestamp = strtotime($request->time_found);
+        
+            $item = new Item();
+            $item->name = $request->item;
+            $item->item_category_id = $request->category;
+            $item->item_status_id = 2;
+            $item->description = $request->description;
+            $item->image =  $this->uploadImage($request);
+            $item->location_id = $request->location;
+            $item->location_found = $request->detail_location;
+            $item->time_found = date('Y-m-d H:i:s', $timeFoundTimestamp);
+            $item->save();
+        
+            Session::flash('title', 'Item Berhasil Diinput!');
+            Session::flash('message', '');
+            Session::flash('icon', 'success');
     
-        $timeFoundTimestamp = strtotime($request->time_found);
-    
-        $item = new Item();
-        $item->name = $request->item;
-        $item->item_category_id = $request->category;
-        $item->item_status_id = 2;
-        $item->description = $request->description;
-        $item->image =  $this->uploadImage($request);
-        $item->location_id = $request->location;
-        $item->location_found = $request->detail_location;
-        $item->time_found = date('Y-m-d H:i:s', $timeFoundTimestamp);
-        $item->save();
-    
-        Session::flash('title', 'Item Berhasil Diinput!');
-        Session::flash('message', '');
-        Session::flash('icon', 'success');
-    
-        return redirect()->route('admin.showAdminItem')->with('success', 'Item Berhasil Diinput!');
+            return redirect()->route('admin.showAdminItem')->with('success', 'Item Berhasil Diinput!');
+        } catch (Exception $e) {
+            Session::flash('title', 'Error!');
+            Session::flash('message', 'Terjadi kesalahan saat menyimpan data.');
+            Session::flash('icon', 'error');
+        
+            return redirect()->back()->withInput();
+        }
     }    
 
     public function editAdminItem(Item $item)

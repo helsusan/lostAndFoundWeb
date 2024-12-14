@@ -14,7 +14,10 @@
                     <label for="item" class="block mb-2 text-sm font-medium">Item</label>
                     <input type="text" name="item" id="item" 
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-                        placeholder="Enter item name" required>
+                        placeholder="Enter item name" value="{{ old('item') }}" required>
+                    @error('item')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Category -->
@@ -24,9 +27,14 @@
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                         <option value="" selected disabled>Select category</option>
                         @foreach ($categories as $category)
-                        <option value="{{ $category->id  }}">{{ $category->name }}</option>
+                        <option value="{{ $category->id }}" {{ old('category') == $category->id ? 'selected' : '' }}>
+                            {{ $category->name }}
+                        </option>
                         @endforeach
                     </select>
+                    @error('category')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Description -->
@@ -34,7 +42,10 @@
                     <label for="description" class="block mb-2 text-sm font-medium">Description</label>
                     <textarea name="description" id="description" rows="4" 
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-                        placeholder="Write a description..." required></textarea>
+                        placeholder="Write a description..." required>{{ old('description') }}</textarea>
+                    @error('description')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Image -->
@@ -43,6 +54,9 @@
                     <input type="file" name="image" id="image" 
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                         accept="image/*" required>
+                    @error('image')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Location Found -->
@@ -52,9 +66,14 @@
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                         <option value="" selected disabled>Select location</option>
                         @foreach ($locations as $location)
-                        <option value="{{ $location->id }}">{{ $location->name }} - {{ $location->building }}</option>
+                        <option value="{{ $location->id }}" {{ old('location') == $location->id ? 'selected' : '' }}>
+                            {{ $location->name }} - {{ $location->building }}
+                        </option>
                         @endforeach
                     </select>
+                    @error('location')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Detail Location Found -->
@@ -62,14 +81,21 @@
                     <label for="detail_location" class="block mb-2 text-sm font-medium">Detail Location Found</label>
                     <input type="text" name="detail_location" id="detail_location" 
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-                        placeholder="e.g., Table 5, near entrance" required>
+                        placeholder="e.g., Table 5, near entrance" value="{{ old('detail_location') }}" required>
+                    @error('detail_location')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Time Found -->
                 <div>
                     <label for="time_found" class="block mb-2 text-sm font-medium">Time Found</label>
                     <input type="datetime-local" name="time_found" id="time_found" 
-                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        value="{{ old('time_found') }}" required>
+                    @error('time_found')
+                        <span class="text-red-500 text-sm">{{ $message }}</span>
+                    @enderror
                 </div>
             </div>
             

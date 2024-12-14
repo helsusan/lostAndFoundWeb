@@ -14,7 +14,10 @@
                     <label for="description" class="block mb-2 text-sm font-medium">Description</label>
                     <textarea name="description" id="description" rows="4" 
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-                        placeholder="Write a description..." required></textarea>
+                        placeholder="Write a description..." required>{{ old('description') }}</textarea>
+                    @error('description')
+                    <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Image -->
@@ -23,6 +26,9 @@
                     <input type="file" name="image" id="image" 
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                         accept="image/*" required>
+                    @error('image')
+                    <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Location Lost-->
@@ -32,9 +38,14 @@
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
                         <option value="" selected disabled>Select location</option>
                         @foreach ($locations as $location)
-                        <option value="{{ $location->id }}">{{ $location->name }} - {{ $location->building }}</option>
+                        <option value="{{ $location->id }}" {{ old('location') == $location->id ? 'selected' : '' }}>
+                            {{ $location->name }} - {{ $location->building }}
+                        </option>
                         @endforeach
                     </select>
+                    @error('location')
+                    <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Detail Location Lost -->
@@ -42,14 +53,21 @@
                     <label for="location_lost" class="block mb-2 text-sm font-medium">Detail Location Lost</label>
                     <input type="text" name="location_lost" id="location_lost" 
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-                        placeholder="e.g., Table 5, near entrance" required>
+                        placeholder="e.g., Table 5, near entrance" value="{{ old('location_lost') }}" required>
+                    @error('location_lost')
+                    <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- Time Lost -->
                 <div>
                     <label for="time_lost" class="block mb-2 text-sm font-medium">Time Lost</label>
                     <input type="datetime-local" name="time_lost" id="time_lost" 
-                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        value="{{ old('time_lost') }}" required>
+                    @error('time_lost')
+                    <p class="mt-2 text-sm text-red-500">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             
