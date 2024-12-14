@@ -16,6 +16,9 @@
                     <textarea id="description" name="description" rows="4"
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                         placeholder="Enter description" required>{{ old('description', $report->description) }}</textarea>
+                    @error('description')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- dropdown dari db -->
@@ -30,6 +33,9 @@
                         </option>
                         @endforeach
                     </select>
+                    @error('location_lost')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <!-- input dari user -->
@@ -39,6 +45,9 @@
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                         value="{{ old('location_detail', $report->location_lost) }}" 
                         placeholder="Enter detail location">
+                    @error('location_detail')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
 
                 <div>
@@ -49,9 +58,12 @@
                     @if ($report->image)
                     <div class="mt-4">
                         <p class="text-sm text-gray-300">Current Image:</p>
-                        <img src="{{ asset($report->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg mt-2">
+                        <img src="{{ asset(old('image', $report->image)) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg mt-2">
                     </div>
                     @endif
+                    @error('image')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             

@@ -16,7 +16,7 @@ class MyReportController extends Controller
     {
         $reports = Report::where('user_id', auth()->id())->get();
 
-        $reports = $reports->map(function ($report) {
+        $reports = $reports->map(function (Report $report): Report {
             $report->time_lost = \Carbon\Carbon::parse($report->time_lost)->format('d-m-y H:i:s');
             return $report;
         });
@@ -68,62 +68,57 @@ class MyReportController extends Controller
     // update report
     public function updateMyReport($report, Request $request)
     {
-        // dd($report,$request->all());
-        // Log::info("tes");
-        try {
-            DB::beginTransaction();
-
-            $data=Report::where('id',$report);
-            $report2=$data->first();
+    // dd($report,$request->all());
+    // Log::info("tes");
+            $data = Report::where('id', $report);
+            $report2 = $data->first();
             // Log::info($report2);
-            
-                if($report2==null){
-                    DB::rollBack();
-                    Log::error(message: "Data not found");
-                    return redirect()->route('myreport.showReports')->with('error', "Data not found");
-                }
 
-                // dd($report2, $request->all());
-                if ($report2->user_id !== auth()->id() || $report2->is_verified) {
-                    abort(403, 'Unauthorized action.');
-                }
-            
-                // request dari name di blade
-                $request->validate([
-                    'description' => 'required|string|max:255',
-                    'location_lost' => 'required|exists:locations,id',
-                    'location_detail' => 'nullable|string|max:255',
-                    'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                ]);
-            
-                // update image jika ada
-                if ($request->hasFile('image')) {
-                    $imagePath = $this->uploadImage($request, $report2);
-                }
-            
-                // dd($request->description,$request->location_lost, $request->location_detail, $request->time_lost);
-                // dari database
-                $data->update([
-                    'description' => $request->description,
-                    'location_id' => $request->location_lost,
-                    'location_lost' => $request->location_detail,
-                    'image' => $imagePath ?? $report2->image,
-                ]);
-            DB::commit();
+            if ($report2 == null) {
+                DB::rollBack();
+                Log::error(message: "Data not found");
+                return redirect()->route('myreport.showReports')->with('error', "Data not found");
+            }
+
+            // dd($report2, $request->all());
+            if ($report2->user_id !== auth()->id() || $report2->is_verified) {
+                abort(403, 'Unauthorized action.');
+            }
+
+            // request dari name di blade dengan custom error messages
+            $validatedData = $request->validate([
+                'description' => 'required|string|max:255',
+                'location_lost' => 'required|exists:locations,id',
+                'location_detail' => 'nullable|string|max:255',
+                'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ], [
+                'description.required' => 'The description field is required.',
+                'description.string' => 'The description must be a valid string.',
+                'description.max' => 'The description cannot exceed 255 characters.',
+                'location_lost.required' => 'Please select a valid location.',
+                'location_lost.exists' => 'The selected location does not exist.',
+                'location_detail.string' => 'The location detail must be a valid string.',
+                'location_detail.max' => 'The location detail cannot exceed 255 characters.',
+            ]);
+
+            // update image jika ada
+            if ($request->hasFile('image')) {
+                $imagePath = $this->uploadImage($request, $report2);
+            }
+
+            // dd($request->description,$request->location_lost, $request->location_detail, $request->time_lost);
+            // dari database
+            $data->update([
+                'description' => $validatedData['description'],
+                'location_id' => $validatedData['location_lost'],
+                'location_lost' => $validatedData['location_detail'],
+                'image' => $imagePath ?? $report2->image,
+            ]);
 
             Session::flash('title', 'Changes Saved Successfully!');
             Session::flash('message', '');
             Session::flash('icon', 'success');
             return redirect()->route('myreport.showReports');
-        } catch(Exception $e){
-            DB::rollBack();
-            Log::error($e->getTraceAsString());
-            return redirect()->route('myreport.showReports')->with('error', $e->getMessage());
-        } catch (\Throwable $th) {
-            DB::rollBack();
-            Log::error($th->getMessage(), $th->getTrace());
-            return redirect()->route('myreport.showReports')->with('error', $th->getMessage());
-        }
     }
 
     // untuk update report status sudah ketemu/belum
