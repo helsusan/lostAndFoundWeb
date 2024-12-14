@@ -10,61 +10,73 @@
 
             <h2 class="mb-6 text-2xl font-bold text-center">EDIT ITEM</h2>
             
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <!-- deskripsi item -->
-            <div class="md:col-span-2">
-                <label for="description" class="block mb-2 text-sm font-medium">Description</label>
-                <textarea id="description" name="description" rows="4"
-                    class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-                    required>{{ old('description', $item->description) }}</textarea>
-                @error('description')
-                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
-                @enderror
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <!-- deskripsi item -->
+                <div class="md:col-span-2">
+                    <label for="description" class="block mb-2 text-sm font-medium">Description</label>
+                    <textarea id="description" name="description" rows="4"
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        required>{{ old('description', $item->description) }}</textarea>
+                    @error('description')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <!-- lokasi ditemukannya item tersebut -->
-            <div class="col-span-1 md:col-span-1">
-                <label for="location_found" class="block mb-2 text-sm font-medium">Location Found</label>
-                <select name="location_found" id="location_found" 
-                    class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
-                    <option value="" selected disabled>Select location</option>
-                    @foreach($locations as $location)
-                        <option value="{{ $location->id }}" @if($item->location_id == $location->id) selected @endif>
-                            {{ $location->name }} - {{ $location->building }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+                <!-- lokasi ditemukan -->
+                <div class="col-span-1 md:col-span-1">
+                    <label for="location_found" class="block mb-2 text-sm font-medium">Location Found</label>
+                    <select name="location_found" id="location_found" 
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <option value="" selected disabled>Select location</option>
+                        @foreach($locations as $location)
+                            <option value="{{ $location->id }}" @if($item->location_id == $location->id) selected @endif>
+                                {{ $location->name }} - {{ $location->building }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('location_found')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <!-- detail lokasi -->
-            <div class="col-span-1 md:col-span-1">
-                <label for="location_detail" class="block mb-2 text-sm font-medium">Location Detail</label>
-                <input type="text" id="location_detail" name="location_detail" 
-                    class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
-                    value="{{ old('location_detail', $item->location_found) }}">
-            </div>
+                <!-- detail lokasi -->
+                <div class="col-span-1 md:col-span-1">
+                    <label for="location_detail" class="block mb-2 text-sm font-medium">Location Detail</label>
+                    <input type="text" id="location_detail" name="location_detail" 
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
+                        value="{{ old('location_detail', $item->location_found) }}">
+                    @error('location_detail')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <!-- upload image -->
-            <div>
-                <label for="image" class="block mb-2 text-sm font-medium">Upload Image</label>
-                <input type="file" id="image" name="image" 
-                    class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                @if ($item->image)
-                    <div class="mt-4">
-                        <p class="text-sm text-gray-300">Current Image:</p>
-                        <img src="{{ asset($item->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg mt-2">
-                    </div>
-                @endif
-            </div>
+                <!-- upload image -->
+                <div>
+                    <label for="image" class="block mb-2 text-sm font-medium">Upload Image</label>
+                    <input type="file" id="image" name="image" 
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                    @if ($item->image)
+                        <div class="mt-4">
+                            <p class="text-sm text-gray-300">Current Image:</p>
+                            <img src="{{ asset($item->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg mt-2">
+                        </div>
+                    @endif
+                    @error('image')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
 
-            <!-- waktu ditemukannya item tersebut -->
-            <div>
-                <label for="time_found" class="block mb-2 text-sm font-medium">Found Time</label>
-                <input type="datetime-local" id="time_found" name="time_found" 
-                    class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                    value="{{ old('time_found', $item->time_found ? \Illuminate\Support\Carbon::parse($item->time_found)->format('Y-m-d\TH:i') : '') }}">
+                <!-- waktu ditemukan -->
+                <div>
+                    <label for="time_found" class="block mb-2 text-sm font-medium">Found Time</label>
+                    <input type="datetime-local" id="time_found" name="time_found" 
+                        class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                        value="{{ old('time_found', $item->time_found ? \Illuminate\Support\Carbon::parse($item->time_found)->format('Y-m-d\TH:i') : '') }}">
+                    @error('time_found')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
+                </div>
             </div>
-        </div>
 
             <!-- button -->
             <div class="flex justify-center gap-4">
