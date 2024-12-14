@@ -70,35 +70,49 @@ class ItemController extends Controller
     
     public function updateAdminItem(Request $request, Item $item)
     {
-        // Validasi data input
-        $request->validate([
+        // validasi data input
+        $validatedData = $request->validate([
             'description' => 'required|string|max:255',
             'location_found' => 'required|exists:locations,id',
             'location_detail' => 'nullable|string|max:255',
             'time_found' => 'nullable|date',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'description.required' => 'The description field is required.',
+            'description.string' => 'The description must be a valid string.',
+            'description.max' => 'The description cannot exceed 255 characters.',
+            'location_found.required' => 'Please select a valid location.',
+            'location_found.exists' => 'The selected location does not exist.',
+            'location_detail.string' => 'The location detail must be a valid string.',
+            'location_detail.max' => 'The location detail cannot exceed 255 characters.',
+            'time_found.date' => 'The time found must be a valid date.',
+            'image.image' => 'The uploaded file must be an image.',
+            'image.mimes' => 'The image must be in jpeg, png, jpg, or gif format.',
+            'image.max' => 'The image size cannot exceed 2MB.',
         ]);
     
-        // Memperbarui image
+        // update image
         if ($request->hasFile('image')) {
             $imagePath = $this->uploadImage($request, $item);
             $item->image = $imagePath;
         }
     
-        // Memperbarui item
+        // memperbarui data item
         $item->update([
-            'location_id' => $request->location_found,
-            'location_found' => $request->location_detail,
-            'description' => $request->description,
-            'time_found' => $request->time_found ? \Illuminate\Support\Carbon::parse($request->time_found) : null,
+            'description' => $validatedData['description'],
+            'location_id' => $validatedData['location_found'],
+            'location_found' => $validatedData['location_detail'],
+            'time_found' => $validatedData['time_found'] ? \Illuminate\Support\Carbon::parse($validatedData['time_found']) : null,
+            'image' => $item->image ?? null,
         ]);
     
+        // pesan sukses
         Session::flash('title', 'Item successfully updated!');
         Session::flash('message', '');
         Session::flash('icon', 'success');
     
         return redirect()->route('admin.showAdminItem');
-    }
+    }    
 
     public function deleteAdminItem(Item $item)
     {

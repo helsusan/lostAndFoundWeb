@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="min-h-screen flex items-center justify-center">
+<div class="min-h-screen flex items-center justify-center my-10">
     <div class="w-full max-w-4xl p-6 bg-[#133E87] text-white rounded-lg shadow-lg">
         <form action="{{ route('admin.updateItem', $item->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -17,6 +17,9 @@
                 <textarea id="description" name="description" rows="4"
                     class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                     required>{{ old('description', $item->description) }}</textarea>
+                @error('description')
+                    <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                @enderror
             </div>
 
             <!-- lokasi ditemukannya item tersebut -->
