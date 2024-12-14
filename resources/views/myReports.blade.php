@@ -38,6 +38,30 @@
         border-radius: 5px;
         padding: 4px 8px;
     }
+
+    select {
+        appearance: none;
+        padding: 8px 12px;
+        margin: 0;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill-rule='evenodd' d='M12.53 16.28a.75.75 0 0 1-1.06 0l-7.5-7.5a.75.75 0 0 1 1.06-1.06L12 14.69l6.97-6.97a.75.75 0 1 1 1.06 1.06l-7.5 7.5Z' clip-rule='evenodd'/%3E%3C/svg%3E") no-repeat right 12px center;
+        background-size: 12px;
+        width: 180px;
+    }
+
+    input[type="number"] {
+        -moz-appearance: textfield;
+        appearance: none;
+        padding: 10px;
+        width: 180px;
+    }
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 </style>
 
 
