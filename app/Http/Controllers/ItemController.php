@@ -79,13 +79,13 @@ class ItemController extends Controller
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
     
-        // Perbarui gambar jika ada
+        // Memperbarui image
         if ($request->hasFile('image')) {
             $imagePath = $this->uploadImage($request, $item);
             $item->image = $imagePath;
         }
     
-        // Perbarui item
+        // Memperbarui item
         $item->update([
             'location_id' => $request->location_found,
             'location_found' => $request->location_detail,
