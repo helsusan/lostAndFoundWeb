@@ -5,36 +5,42 @@ namespace App\Http\Controllers;
 use App\Models\Report;
 use App\Models\Item;
 use App\Models\ItemCategory;
+use App\Models\ReportStatus;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
     // menampilkan halaman home dengan data lengkap
     public function index(Request $request)
-    {
-        // menampilkan laporan yang sudah diverifikasi
-        $verifiedReports = Report::where('is_verified', 1)
-            ->with(['user', 'location'])
-            ->get();
+{
+    // Menampilkan laporan yang sudah diverifikasi, kecuali yang report_status_id = 1
+    $verifiedReports = Report::where('is_verified', 1)
+        ->where('report_status_id', '!=', 1) // Exclude reports with report_status_id = 1
+        ->with(['user', 'location'])
+        ->get();
 
-        $categories = ItemCategory::all();
+    $categories = ItemCategory::all();
 
-        // filter berdasarkan kategori jika ada
-        $query = Item::where('item_status_id', 2) // status pending
-            ->with(['user', 'location', 'itemCategory']);
-        
-        if ($request->has('category') && $request->category != '') {
-            $query->where('item_category_id', $request->category);
-        }
-
-        // menampilkan item Lost Goods setelah filter
-        $lostGoodsItems = $query->get();
-
-        // menampilkan semua laporan
-        $reports = Report::with(['user', 'item', 'location', 'reportStatus'])->get();
-
-        return view('home', compact('verifiedReports', 'reports', 'lostGoodsItems', 'categories'));
+    // Filter berdasarkan kategori jika ada
+    $query = Item::where('item_status_id', 2) // Status pending
+        ->with(['user', 'location', 'itemCategory']);
+    
+    if ($request->has('category') && $request->category != '') {
+        $query->where('item_category_id', $request->category);
     }
+
+    // Menampilkan item Lost Goods setelah filter
+    $lostGoodsItems = $query->get();
+
+    // Menampilkan semua laporan yang tidak memiliki report_status_id = 1
+    $reports = Report::where('report_status_id', '!=', 1) // Exclude reports with report_status_id = 1
+        ->with(['user', 'item', 'location', 'reportStatus'])
+        ->get();
+
+    return view('home', compact('verifiedReports', 'reports', 'lostGoodsItems', 'categories'));
+}
+
+    
 
     // fetch laporan yang sudah diverifikasi
     public function fetchVerifiedReports()
@@ -62,4 +68,15 @@ class HomeController extends Controller
 
         return response()->json($lostGoodsItems);
     }
+
+    // Fetch reports excluding those with report_status_id = 1
+public function fetchReports(Request $request)
+{
+    $reports = Report::where('report_status_id', '!=', 1)
+        ->with(['user', 'item', 'location', 'reportStatus'])
+        ->get();
+
+    return response()->json($reports);
+}
+
 }

@@ -20,6 +20,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/fetch-verified-reports', [HomeController::class, 'fetchVerifiedReports']);
     Route::get('/fetch-lost-goods', [HomeController::class, 'fetchLostGoods']);
+    // Add the route for fetching reports
+    Route::get('/fetch-reports', [HomeController::class, 'fetchReports']);
+
 
     // profile
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

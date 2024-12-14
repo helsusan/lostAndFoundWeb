@@ -242,11 +242,48 @@
                     .catch(error => console.error('Error fetching lost goods:', error));
             }
 
+            function loadReports() {
+                fetch('/fetch-reports')
+                    .then(response => response.json())
+                    .then(data => {
+                        const reportsContainer = document.querySelector('.reportsContainer'); 
+                        reportsContainer.innerHTML = ''; 
+
+                        if (data.length === 0) {
+                            reportsContainer.innerHTML = `<p class="text-gray-500 text-center">No reports found.</p>`;
+                        } else {
+                            const grid = document.createElement('div'); 
+                            grid.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4';
+
+                            data.forEach(report => {
+                                const reportCard = `
+                                    <div class="report-card bg-white shadow-lg rounded-lg p-4">
+                                        <strong>${report.item.name}</strong><br>
+                                        Description: ${report.item.description}<br>
+                                        Location: ${report.location.name}<br>
+                                        Status: ${report.reportStatus.name}<br>
+                                        Reported By: ${report.user.name}<br>
+                                        Time Reported: ${new Date(report.created_at).toLocaleString()}<br>
+                                    </div>`;
+                                grid.innerHTML += reportCard; 
+                            });
+
+                            reportsContainer.innerHTML = ''; // Clear the container before appending new data
+                            reportsContainer.appendChild(grid);
+                        }
+                    })
+                    .catch(error => console.error('Error fetching reports:', error));
+            }
+
+
+
+
             // jalankan polling setiap 5 detik untuk update verified reports dan lost goods
-            setInterval(() => {
-                loadVerifiedReports();
-                loadLostGoods();
-            }, 5000);
+            // setInterval(() => {
+            //     loadVerifiedReports();
+            //     loadLostGoods();
+            //     loadReports();
+            // }, 5000);
         });
     </script>
 </body>
