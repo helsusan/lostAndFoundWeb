@@ -49,12 +49,23 @@ class ReportController extends Controller
 
     public function updateAdminReport(Request $request, Report $report)
     {
-        // Validasi data input
-        $request->validate([
+        // Validasi data input dengan pesan kesalahan kustom
+        $validatedData = $request->validate([
             'description' => 'required|string|max:255',
             'location_lost' => 'required|exists:locations,id',
             'location_detail' => 'nullable|string|max:255',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ], [
+            'description.required' => 'The description field is required.',
+            'description.string' => 'The description must be a valid string.',
+            'description.max' => 'The description cannot exceed 255 characters.',
+            'location_lost.required' => 'Please select a valid location.',
+            'location_lost.exists' => 'The selected location does not exist.',
+            'location_detail.string' => 'The location detail must be a valid string.',
+            'location_detail.max' => 'The location detail cannot exceed 255 characters.',
+            'image.image' => 'The uploaded file must be an image.',
+            'image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif.',
+            'image.max' => 'The image size must not exceed 2MB.',
         ]);
     
         // Perbarui gambar jika ada
@@ -65,12 +76,13 @@ class ReportController extends Controller
     
         // Perbarui laporan
         $report->update([
-            'description' => $request->description,
-            'location_id' => $request->location_lost,
-            'location_lost' => $request->location_detail,
+            'description' => $validatedData['description'],
+            'location_id' => $validatedData['location_lost'],
+            'location_lost' => $validatedData['location_detail'],
         ]);
-
-        Session::flash('title', 'Item successfully added!');
+    
+        // Flash message untuk notifikasi berhasil
+        Session::flash('title', 'Item successfully updated!');
         Session::flash('message', '');
         Session::flash('icon', 'success');
     

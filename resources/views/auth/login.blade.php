@@ -10,8 +10,13 @@
 
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="antialiased" style="background-image: url('/images/login.jpeg'); background-size: cover; background-position: center;">
+    @include('components.swallalert')
+    
     <div class="min-h-screen flex items-center justify-center">
         <div class="w-full max-w-md rounded-lg shadow-lg p-6" style="background-color: #c3e4ff;">
             <div class="text-center mb-4">
@@ -41,6 +46,13 @@
                     @error('password')
                         <span class="text-red-500 text-sm mt-1">{{ $message }}</span>
                     @enderror
+                </div>
+
+                <!-- Forgot Password -->
+                <div class="flex items-center justify-between mb-4">
+                    <a href="{{ route('password.request') }}" class="text-sm text-blue-900 hover:underline">
+                        Forgot Password?
+                    </a>
                 </div>
 
                 <!-- Submit Button -->
