@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="min-h-screen flex items-center justify-center">
+<div class="min-h-screen flex items-center justify-center my-10">
     <div class="w-full max-w-4xl p-6" style="background-color: #133E87; color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
         <form action="{{ route('admin.updateReport', $report->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -16,6 +16,9 @@
                     <textarea id="description" name="description" rows="4"
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                         required>{{ old('description', $report->description) }}</textarea>
+                        @error('description')
+                            <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                        @enderror
                 </div>
 
                 <!-- Detail Location -->
@@ -24,6 +27,9 @@
                     <input type="text" id="location_detail" name="location_detail" 
                         class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" 
                         value="{{ old('location_detail', $report->location_lost) }}">
+                        @error('location_detail')
+                            <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                        @enderror
                 </div>
 
                 <!-- Location Lost-->
@@ -37,6 +43,9 @@
                                 {{ $location->name }} - {{ $location->building }}
                             </option>
                         @endforeach
+                        @error('location_lost')
+                            <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                        @enderror
                     </select>
                 </div>
 
@@ -51,6 +60,9 @@
                             <img src="{{ asset($report->image) }}" alt="Current Image" class="w-32 h-32 object-cover rounded-lg mt-2">
                         </div>
                     @endif
+                    @error('image')
+                        <p class="text-red-500 text-sm mt-2">{{ $message }}</p>
+                    @enderror
                 </div>
             </div>
             
