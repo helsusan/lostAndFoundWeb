@@ -108,7 +108,7 @@ class ItemController extends Controller
 
         $item->delete();
 
-        Session::flash('title', 'Report Deleted Successfully!');
+        Session::flash('title', 'Item Deleted Successfully!');
         Session::flash('message', '');
         Session::flash('icon', 'success');
 
