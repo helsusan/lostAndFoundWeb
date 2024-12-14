@@ -17,14 +17,14 @@ class ReportController extends Controller
         // Ambil data dari tabel reports dengan relasi
         $reports = Report::with(['user', 'item', 'location', 'reportStatus'])->get();
 
-        // Format the time_lost field
+        // Format time_lost 
         $reports = $reports->map(function ($report) {
             $report->time_lost = \Carbon\Carbon::parse($report->time_lost)->format('d-m-y H:i:s');
             return $report;
         });
 
 
-        // Kirim data ke view
+        // Kirim data ke adminReport
         return view('adminReport', compact('reports'));
     }
 
