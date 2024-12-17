@@ -201,4 +201,29 @@ class ItemController extends Controller
             ], 500);
         }
     }
+
+    public function showAssignItemPage($id)
+    {
+        $item = Item::findOrFail($id);
+        
+        return view('adminItemAssign', compact('item'));
+    }
+    
+    public function assignItem(Request $request, $id)
+    {
+        $request->validate([
+            'owner_name' => 'required|string|max:255',
+        ], [
+            'owner_name.required' => 'The owner name field is required.',
+            'owner_name.string' => 'The owner name must be a valid string.',
+            'owner_name.max' => 'The owner name cannot exceed 255 characters.',
+        ]);
+    
+        $item = Item::findOrFail($id);
+    
+        $item->owner_name = $request->input('owner_name');
+        $item->save();
+    
+        return redirect()->route('admin.showAdminItem')->with('success', 'Item successfully assigned!');
+    }
 }

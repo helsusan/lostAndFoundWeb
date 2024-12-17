@@ -47,6 +47,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/items/update/{item}', [ItemController::class, 'updateAdminItem'])->name('admin.updateItem');
         Route::delete('/items/delete/{item}', [ItemController::class, 'deleteAdminItem'])->name('admin.deleteItem');
         Route::patch('/items/update-item-status/{id}', [ItemController::class, 'updateItemStatus']);
+        Route::get('/admin/assign/item/{id}', [ItemController::class, 'showAssignItemPage'])->name('admin.showAssignItemPage');
+        Route::post('/admin/assign/item/{id}', [ItemController::class, 'assignItem'])->name('admin.assignItem');
     });
 
     Route::middleware(['role:2'])->group(function(){

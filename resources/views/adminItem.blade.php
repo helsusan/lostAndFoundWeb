@@ -77,7 +77,7 @@
                     <th class="text-sm font-bold uppercase text-center border-b">Location Found</th>
                     <th class="text-sm font-bold uppercase text-center border-b">Location Detail</th>
                     <th class="text-sm font-bold uppercase text-center border-b">Time Found</th>
-                    <th class="text-sm font-bold uppercase text-center border-b">Status</th>
+                    <th class="text-sm font-bold uppercase text-center border-b">Item Status</th>
                     <th class="text-sm font-bold uppercase text-center border-b">Action</th>
                 </tr>
             </thead>
@@ -109,11 +109,10 @@
                         <td class="py-4 px-6 text-left font-medium">{{ $item->location_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center font-medium">{{ $item->time_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center">
-                            <select class="item-status-dropdown bg-[#f0f8ff] text-[#003366] py-2 px-4 rounded w-full min-w-[120px] text-sm" data-item-id="{{ $item->id }}">
-                                <option value="2" @if($item->item_status_id == 2) selected @endif>Pending</option>
-                                <option value="1" @if($item->item_status_id == 1) selected @endif>Returned</option>
-                                <option value="3" @if($item->item_status_id == 3) selected @endif>Disposed</option>
-                            </select>
+                            <a href="{{ route('admin.showAssignItemPage', $item->id) }}"    
+                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-bold">
+                                Assign
+                            </a>
                         </td>
                         <td class="py-4 px-6 border-b text-center">
                         <div class="flex flex-col items-center gap-2"></div>
@@ -179,52 +178,6 @@
         const modal = document.getElementById('imageModal');
         modal.classList.add('hidden');
     }
-
-    // dropdown status
-    document.querySelectorAll('.item-status-dropdown').forEach(function (select) {
-        select.addEventListener('change', function () {
-            const itemId = this.getAttribute('data-item-id'); // mendapatkan id item
-            const itemStatus = this.value; // mendapatkan status yang dipilih
-
-            // mengirim request PATCH untuk memperbarui status item
-            fetch(`/items/update-item-status/${itemId}`, {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                },
-                body: JSON.stringify({ item_status: itemStatus }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    if (data.success) {
-                        // pesan sukses
-                        Swal.fire({
-                            icon: 'success',
-                            title: 'Success',
-                            text: 'Item status updated successfully!',
-                            timer: 1500,
-                            showConfirmButton: false,
-                        });
-                    } else {
-                        // pesan error
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: data.message || 'Failed to update item status.',
-                        });
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: 'An error occurred while updating the item status.',
-                    });
-                });
-        });
-    });
 </script>
 
 @endsection
