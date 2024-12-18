@@ -124,8 +124,11 @@
 <script>
     $('#Table').DataTable({
         columnDefs: [
-            { orderable: false, targets: [0] }, 
+            { orderable: false, targets: [0] },
         ],
+        language: {
+            emptyTable: "You have no items to assign yet."
+        }
     });
 </script>
 
