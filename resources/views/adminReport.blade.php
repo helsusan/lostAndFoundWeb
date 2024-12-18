@@ -103,10 +103,19 @@
                                     Assign
                                 </a>
                             @else
-                                <a href="{{ route('admin.detailItem', $report->item_id) }}" 
-                                   class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 font-bold">
-                                    Detail
-                                </a>
+                                <div class="flex flex-col gap-2">
+                                    <a href="{{ route('admin.detailItem', $report->item_id) }}" 
+                                    class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 font-bold">
+                                        Detail
+                                    </a>
+                                    <form action="{{ route('admin.cancelAssignItem', $report->id) }}" method="POST" class="w-full">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 font-bold w-full">
+                                            Cancel
+                                        </button>
+                                    </form>
+                                </div>
                             @endif
                         </td>
                         <td class="py-4 px-6 border-b text-left font-medium">{{ $report->is_verified ? 'Yes' : 'No' }}</td>

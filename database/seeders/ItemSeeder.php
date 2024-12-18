@@ -15,6 +15,7 @@ class ItemSeeder extends Seeder
     {
         DB::table('items')->insert([
             [
+                'user_id'=> 9,
                 'item_category_id' => 1,
                 'location_id' => 1,
                 'item_status_id' => 2,
@@ -27,6 +28,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 10,
                 'item_category_id' => 2,
                 'location_id' => 2,
                 'item_status_id' => 2,
@@ -39,6 +41,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 11,
                 'item_category_id' => 3,
                 'location_id' => 3,
                 'item_status_id' => 2,
@@ -51,6 +54,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 12,
                 'item_category_id' => 6,
                 'location_id' => 4,
                 'item_status_id' => 2,
@@ -63,6 +67,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 13,
                 'item_category_id' => 3,
                 'location_id' => 5,
                 'item_status_id' => 2,
@@ -75,6 +80,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 14,
                 'item_category_id' => 5,
                 'location_id' => 2,
                 'item_status_id' => 2,
@@ -87,6 +93,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 15,
                 'item_category_id' => 1,
                 'location_id' => 5,
                 'item_status_id' => 2,
@@ -99,6 +106,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 16,
                 'item_category_id' => 3,
                 'location_id' => 4,
                 'item_status_id' => 2,
@@ -111,6 +119,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 17,
                 'item_category_id' => 1,
                 'location_id' => 2,
                 'item_status_id' => 2,
@@ -123,6 +132,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 18,
                 'item_category_id' => 3,
                 'location_id' => 3,
                 'item_status_id' => 2,
@@ -135,6 +145,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 19,
                 'item_category_id' => 3,
                 'location_id' => 4,
                 'item_status_id' => 2,
@@ -147,6 +158,7 @@ class ItemSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
+                'user_id'=> 20,
                 'item_category_id' => 3,
                 'location_id' => 5,
                 'item_status_id' => 2,

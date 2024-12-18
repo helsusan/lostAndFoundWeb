@@ -152,5 +152,18 @@ class ReportController extends Controller
     
         return view('assignItem', compact('report', 'items'));
     }
+
+    //membatalkan item yang sudah terassign
+    public function cancelAssignItem(Report $report)
+    {
+        // Mematalkan item yang sudah terassign
+        $report->update(['item_id' => null]);
+        
+        Session::flash('title', 'Item canceled successfully!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
+
+        return redirect()->route('admin.showAdminReport');
+    }
     
 }

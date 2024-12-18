@@ -50,7 +50,7 @@ class User extends Authenticatable
 
     public function items()
     {
-        return $this->hasManyThrough(Item::class, Report::class, 'user_id', 'id', 'id', 'item_id');
+        return $this->hasMany(Item::class);
     }    
 
     public function reports(){

@@ -35,6 +35,6 @@ class Item extends Model
 
     public function user()
     {
-        return $this->hasOneThrough(User::class, Report::class, 'item_id', 'id', 'id', 'user_id');
+        return $this->belongsTo(User::class);
     }    
 }

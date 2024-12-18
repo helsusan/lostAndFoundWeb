@@ -39,6 +39,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/reports/assign/{report}', [ReportController::class, 'showAssignPage'])->name('admin.showAssignPage');
         Route::post('/reports/assign-item/{report}', [ReportController::class, 'assignItemToReport'])->name('admin.assignItemToReport');
         Route::get('/items/detail/{item}', [ReportController::class, 'detailItem'])->name('admin.detailItem');
+        Route::put('/admin/report/cancel-item/{report}', [ReportController::class, 'cancelAssignItem'])->name('admin.cancelAssignItem');
+
 
         Route::get('/items', [ItemController::class, 'showAdminItem'])->name('admin.showAdminItem');
         Route::get('/items/create', [ItemController::class, 'createAdminItem'])->name('admin.createItem');
