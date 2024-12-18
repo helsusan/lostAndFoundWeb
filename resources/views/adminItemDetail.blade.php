@@ -14,7 +14,7 @@
         <p class="text-[#133E87] mt-2 font-bold">Location Found: <span class="font-normal">{{ $item->location_found ?? 'N/A' }}</span></p>
         <p class="text-[#133E87] mt-2 font-bold">Time Found: <span class="font-normal">{{ \Carbon\Carbon::parse($item->time_found)->format('d-m-Y H:i:s') ?? 'N/A' }}</span></p>
         <p class="text-[#133E87] mt-2 font-bold">Status: <span class="font-normal">{{ $item->ItemStatus->name ?? 'N/A' }}</span></p>
-        <p class="text-[#133E87] mt-2 font-bold">Reported By: <span class="font-normal">{{ $item->User->name ?? 'N/A' }}</span></p>
+        <p class="text-[#133E87] mt-2 font-bold">Reported By: <span class="font-normal">{{ $item->found_by ?? 'N/A' }}</span></p>
 
         <div class="mt-6 flex justify-end gap-4">
             <a href="{{ route('admin.showAdminReport') }}" class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-all">

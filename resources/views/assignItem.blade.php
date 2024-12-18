@@ -75,6 +75,7 @@
             <thead>
                 <tr class="bg-[#133E87] text-left text-white"> 
                     <th class="w-1/6 py-4 px-6 border-b text-sm font-bold uppercase text-center rounded-tl-lg">Image</th>
+                    <th class="w-1/6 py-4 px-6 border-b text-sm font-bold uppercase text-center">Reported By</th>
                     <th class="w-1/6 py-4 px-6 border-b text-sm font-bold uppercase text-center">Item Name</th>
                     <th class="w-1/6 py-4 px-6 border-b text-sm font-bold uppercase text-center">Category</th>
                     <th class="w-1/6 py-4 px-6 border-b text-sm font-bold uppercase text-center">Description</th>
@@ -89,6 +90,7 @@
                     <td class="py-4 px-6 border-b text-center">
                         <img src="{{ asset($item->image) }}" alt="Item Image" class="w-16 h-16 rounded-lg mx-auto">
                     </td>
+                    <td class="py-4 px-6 border-b text-left font-medium">{{ $item->found_by }}</td>
                     <td class="py-4 px-6 border-b text-left font-medium">{{ $item->name }}</td>
                     <td class="py-4 px-6 border-b text-left font-medium">{{ $item->itemCategory->name ?? 'N/A' }}</td>
                     <td class="py-4 px-6 border-b text-left font-medium">{{ $item->description }}</td>
