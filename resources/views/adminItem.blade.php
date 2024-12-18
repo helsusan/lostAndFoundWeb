@@ -102,10 +102,14 @@
                         <td class="py-4 px-6 text-left font-medium">{{ $item->location_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center font-medium">{{ $item->time_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center">
-                            <a href="{{ route('admin.showAssignItemPage', $item->id) }}"    
-                            class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-bold">
-                                Assign
-                            </a>
+                            @if($item->user_id)
+                                <span class="font-medium">{{ $item->itemStatus->name ?? 'N/A' }}</span>
+                            @else
+                                <a href="{{ route('admin.showAssignItemPage', $item->id) }}" 
+                                    class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-bold">
+                                    Assign
+                                </a>
+                            @endif
                         </td>
                         <td class="py-4 px-6 border-b text-center">
                         <div class="flex flex-col items-center gap-2"></div>
@@ -132,7 +136,6 @@
                         </td>
                     </tr>
                     @endforeach
-                @endif
             </tbody>
         </table>
     </div>

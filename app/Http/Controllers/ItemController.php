@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\Location;
+use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
 use Session;
@@ -205,25 +206,26 @@ class ItemController extends Controller
     public function showAssignItemPage($id)
     {
         $item = Item::findOrFail($id);
+        $users = User::all();
         
-        return view('adminItemAssign', compact('item'));
+        return view('adminItemAssign', compact('item', 'users'));
     }
     
     public function assignItem(Request $request, $id)
     {
         $request->validate([
-            'owner_name' => 'required|string|max:255',
-        ], [
-            'owner_name.required' => 'The owner name field is required.',
-            'owner_name.string' => 'The owner name must be a valid string.',
-            'owner_name.max' => 'The owner name cannot exceed 255 characters.',
+            'owner_name' => 'required|exists:users,id',
+            'status' => 'required|in:pending,returned,disposed',
         ]);
-    
+
         $item = Item::findOrFail($id);
-    
-        $item->owner_name = $request->input('owner_name');
+
+        $statusId = \DB::table('item_statuses')->where('name', $request->input('status'))->value('id');
+        
+        $item->user_id = $request->input('owner_name');
+        $item->item_status_id = $statusId;
         $item->save();
-    
+
         return redirect()->route('admin.showAdminItem')->with('success', 'Item successfully assigned!');
     }
 }
