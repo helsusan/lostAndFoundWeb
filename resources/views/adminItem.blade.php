@@ -82,13 +82,6 @@
                 </tr>
             </thead>
             <tbody>
-                @if($items->isEmpty())
-                    <tr>
-                        <td colspan="10" class="py-4 px-6 text-center text-white font-medium">
-                            Table is empty. No items found.
-                        </td>
-                    </tr>
-                @else
                     @foreach($items as $item)
                     <tr class="border-b h-[160px]">
                         <td class="font-medium">{{ $item->id }}</td>
@@ -163,6 +156,9 @@
         columnDefs: [
             { orderable: false, targets: [1] },
         ],
+        language: {
+            emptyTable: "You have no items yet."
+        }
     });
 
     // menampilkan modal apabila admin click gambar

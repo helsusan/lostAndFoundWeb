@@ -72,13 +72,6 @@
                 </tr>
             </thead>
             <tbody>
-                @if($reports->isEmpty())
-                    <tr>
-                        <td colspan="11" class="py-4 px-6 text-center text-[#133E87] font-medium">
-                            Table is empty. No reports found.
-                        </td>
-                    </tr>
-                @else
                     @foreach($reports as $report)
                     <tr>
                         <td class="py-4 px-6 border-b text-left font-medium">{{ $report->id }}</td>
@@ -162,7 +155,6 @@
                         </td>
                     </tr>
                     @endforeach
-                @endif
             </tbody>
         </table>
     </div>
@@ -183,8 +175,11 @@
 <script>
     $('#Table').DataTable({
         columnDefs: [
-            { orderable: false, targets: [1] }, 
+            { orderable: false, targets: [1] },
         ],
+        language: {
+            emptyTable: "You have no reports yet."
+        }
     });
 
     function showModal(imageSrc) {
