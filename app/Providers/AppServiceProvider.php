@@ -32,5 +32,9 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('create-item', function(User $user){
             return $user->role_id == 1;
         });
+        
+        Gate::define('create-location', function(User $user){
+            return $user->role_id == 1;
+        });
     }
 }

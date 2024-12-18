@@ -33,6 +33,12 @@
                         {{ __('Item') }}
                     </x-nav-link>
                     @endcan
+
+                    @can('create-location')
+                    <x-nav-link :href="route('locations.showLocationList')" :active="request()->routeIs('locations.showLocationList')">
+                        {{ __('Location') }}
+                    </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -105,6 +111,12 @@
             @can('create-item')
             <x-responsive-nav-link :href="route('admin.showAdminItem')" :active="request()->routeIs('admin.showAdminItem')">
                 {{ __('Item') }}
+            </x-responsive-nav-link>
+            @endcan
+
+            @can('create-location')
+            <x-responsive-nav-link :href="route('locations.showLocationList')" :active="request()->routeIs('locations.showLocationList')">
+                {{ __('Location') }}
             </x-responsive-nav-link>
             @endcan
         </div>
