@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
@@ -51,6 +52,13 @@ Route::middleware('auth')->group(function () {
         Route::patch('/items/update-item-status/{id}', [ItemController::class, 'updateItemStatus']);
         Route::get('/admin/assign/item/{id}', [ItemController::class, 'showAssignItemPage'])->name('admin.showAssignItemPage');
         Route::post('/admin/assign/item/{id}', [ItemController::class, 'assignItem'])->name('admin.assignItem');
+
+        Route::get('/locations', [LocationController::class, 'showListLocation'])->name('locations.showLocationList');
+        Route::get('/locations/create', [LocationController::class, 'createLocation'])->name('locations.createLocation');
+        Route::post('/locations/insert', [LocationController::class, 'insertLocation'])->name('locations.insertLocation');
+        Route::get('/locations/edit/{id}', [LocationController::class, 'editLocation'])->name('locations.editLocation');
+        Route::put('/locations/update/{id}', [LocationController::class, 'updateLocation'])->name('locations.updateLocation');
+        Route::delete('/locations/delete/{id}', [LocationController::class, 'deleteLocation'])->name('locations.deleteLocation');
     });
 
     Route::middleware(['role:2'])->group(function(){
