@@ -15,7 +15,7 @@
                     class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                     <option value="" disabled selected>Select Owner</option>
                     @foreach($users as $user)
-                        <option value="{{ $user->id }}" @if($item->owner_name == $user->id) selected @endif>
+                        <option value="{{ $user->id }}" {{ old('owner_name') == $user->id ? 'selected' : '' }}>
                             {{ $user->name }}
                         </option>
                     @endforeach

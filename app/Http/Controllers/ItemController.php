@@ -213,19 +213,50 @@ class ItemController extends Controller
     
     public function assignItem(Request $request, $id)
     {
+        // Validasi input
         $request->validate([
-            'owner_name' => 'required|exists:users,id',
-            'status' => 'required|in:pending,returned,disposed',
+            'owner_name' => 'required|exists:users,id',  // Validasi user_id harus ada di tabel users
+            'status' => 'required|in:returned,disposed',  // Validasi status hanya boleh 'returned' atau 'disposed'
         ]);
-
-        $item = Item::findOrFail($id);
-
-        $statusId = \DB::table('item_statuses')->where('name', $request->input('status'))->value('id');
-        
-        $item->user_id = $request->input('owner_name');
+    
+        // Ambil item berdasarkan ID
+        $item = Item::with('reports')->findOrFail($id);
+    
+        // Ambil user_id dari dropdown (owner_name)
+        $user_id = $request->input('owner_name');
+    
+        // Ambil semua laporan terkait item
+        $reports = $item->reports;
+    
+        // Cek setiap laporan terkait item
+        foreach ($reports as $report) {
+            // Jika user_id di tabel reports tidak cocok dengan user_id di tabel items
+            if ($report->user_id !== $user_id) {
+                // Ubah item_id di laporan menjadi NULL
+                $report->update(['item_id' => null]);
+            } else {
+                // Jika cocok, item_id tetap (tidak diubah)
+                // Tidak ada tindakan yang diperlukan
+            }
+        }
+    
+        // Cek jika status adalah 'disposed', maka tidak bisa diassign
+        if ($request->input('status') === 'disposed') {
+            return redirect()
+                ->route('admin.showAssignItemPage', $id)
+                ->withErrors(['status' => 'Item with status "disposed" cannot be assigned.'])
+                ->withInput();
+        }
+    
+        // Cari ID status 'returned' dari tabel item_statuses
+        $statusId = \App\Models\ItemStatus::where('name', 'returned')->value('id');
+    
+        // Assign item ke user yang valid dan ubah status menjadi 'returned'
+        $item->user_id = $user_id;
         $item->item_status_id = $statusId;
         $item->save();
-
+    
+        // Redirect dengan pesan sukses
         return redirect()->route('admin.showAdminItem')->with('success', 'Item successfully assigned!');
     }
 }

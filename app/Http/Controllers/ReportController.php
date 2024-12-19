@@ -143,15 +143,28 @@ class ReportController extends Controller
     }
 
     // Menampilkan list item yang belum terassign
+    // public function showAssignPage($reportId)
+    // {
+    //     $report = Report::findOrFail($reportId);
+    
+    //     // Ambil items yang tidak ada di reports.item_id
+    //     $items = Item::whereNotIn('id', Report::pluck('item_id')->filter())->get();
+    
+    //     return view('assignItem', compact('report', 'items'));
+    // }
+
     public function showAssignPage($reportId)
-    {
-        $report = Report::findOrFail($reportId);
-    
-        // Ambil items yang tidak ada di reports.item_id
-        $items = Item::whereNotIn('id', Report::pluck('item_id')->filter())->get();
-    
-        return view('assignItem', compact('report', 'items'));
-    }
+{
+    $report = Report::findOrFail($reportId);
+
+    // Ambil items yang tidak ada di reports.item_id dan item_status_id = 2
+    $items = Item::whereNotIn('id', Report::pluck('item_id')->filter())
+                 ->where('item_status_id', 2)  // Menambahkan filter item_status_id = 2
+                 ->get();
+
+    return view('assignItem', compact('report', 'items'));
+}
+
 
     //membatalkan item yang sudah terassign
     public function cancelAssignItem(Report $report)

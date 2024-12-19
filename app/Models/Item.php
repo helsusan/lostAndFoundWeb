@@ -29,9 +29,11 @@ class Item extends Model
         return $this->belongsTo(ItemStatus::class);
     }
 
-    public function report(){
-        return $this->belongsTo(Report::class);
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'item_id');
     }
+    
 
     public function user()
     {
