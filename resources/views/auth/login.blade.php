@@ -48,13 +48,6 @@
                     @enderror
                 </div>
 
-                <!-- Forgot Password -->
-                <div class="flex items-center justify-between mb-4">
-                    <a href="{{ route('password.request') }}" class="text-sm text-blue-900 hover:underline">
-                        Forgot Password?
-                    </a>
-                </div>
-
                 <!-- Submit Button -->
                 <div class="mb-4">
                     <button type="submit" 
