@@ -26,8 +26,8 @@
     }
 
     .bg-gray-500.cursor-not-allowed:disabled {
-    background-color: #6B7280; /* Menentukan warna latar belakang tombol disabled */
-    cursor: not-allowed; /* Menambahkan cursor untuk disabled */
+    background-color: #6B7280; 
+    cursor: not-allowed;
     }
 
     select {

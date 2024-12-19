@@ -38,6 +38,12 @@
             padding: 4px 8px;
         }
 
+        .bg-gray-500.cursor-not-allowed:disabled {
+        background-color: #6B7280;
+        cursor: not-allowed;
+        }
+
+
         select {
             appearance: none;
             padding: 8px 12px;
@@ -121,26 +127,26 @@
                                 @endif
                             </td>
                             <td class="py-4 px-6 border-b text-left">
-                                @if (is_null($report->item_id))
-                                    <p class="font-semibold text-center w-full">Not assigned</p>
-                                @else
-                                    <div class="flex flex-col gap-2">
-                                        <a href="{{ route('user.detailItem', $report->item_id) }}"
-                                            class="bg-green-600 text-white text-center px-4 py-2 rounded-lg hover:bg-green-700 font-bold">
-                                            Detail
-                                        </a>
-                                        <form action="{{ route('user.cancelAssignItem', $report->id) }}" method="POST"
-                                            class="w-full">
-                                            @csrf
-                                            @method('PUT')
-                                            <button type="submit"
-                                                class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 font-bold w-full">
-                                                Not Mine🤨
-                                            </button>
-                                            
-                                        </form>
-                                    </div>
-                                @endif
+                            @if (is_null($report->item_id))
+                                <p class="font-semibold text-center w-full">Not assigned</p>
+                            @else
+                                <div class="flex flex-col gap-2">
+                                    <a href="{{ route('user.detailItem', $report->item_id) }}"
+                                        class="bg-green-600 text-white text-center px-4 py-2 rounded-lg hover:bg-green-700 font-bold">
+                                        Detail
+                                    </a>
+                                    <form action="{{ route('user.cancelAssignItem', $report->id) }}" method="POST" class="w-full">
+                                        @csrf
+                                        @method('PUT')
+                                        <button type="submit" 
+                                            class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 font-bold w-full 
+                                            @if ($report->item->item_status_id == 1 || $report->reportStatus->id == 1) bg-gray-500 cursor-not-allowed @endif"
+                                            @if ($report->item->item_status_id == 1 || $report->reportStatus->id == 1) disabled="disabled" @endif>
+                                            Not Mine🤨
+                                        </button>
+                                    </form>
+                                </div>
+                            @endif
                             </td>
                             <td class="py-4 px-6 border-b text-center">
                                 <div class="flex flex-col items-center gap-2">
