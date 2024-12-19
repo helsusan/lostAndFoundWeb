@@ -126,9 +126,9 @@
                                 @method('PATCH')
                                 <button type="submit" 
                                     class="flex items-center justify-start 
-                                        text-white px-4 py-2 rounded w-full font-bold mb-2
+                                        text-white px-4 py-2 rounded-lg w-full font-bold mb-2
                                         @if($item->item_status_id === 3 || $item->item_status_id === 1) 
-                                            bg-purple-300 cursor-not-allowed 
+                                            bg-gray-500 cursor-not-allowed 
                                         @else 
                                             bg-purple-700 hover:bg-purple-800 
                                         @endif"
