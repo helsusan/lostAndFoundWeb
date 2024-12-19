@@ -102,17 +102,43 @@
                         <td class="py-4 px-6 text-left font-medium">{{ $item->location_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center font-medium">{{ $item->time_found ?? 'N/A' }}</td>
                         <td class="py-4 px-6 text-center">
-                            @if($item->user_id)
-                                <span class="font-medium">{{ $item->itemStatus->name ?? 'N/A' }}</span>
-                            @else
-                                <a href="{{ route('admin.showAssignItemPage', $item->id) }}" 
-                                    class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-bold">
-                                    Assign
-                                </a>
-                            @endif
+                        @if($item->user_id)
+                            <span class="font-medium">{{ $item->itemStatus->name ?? 'N/A' }}</span>
+                        @else
+                            <!-- Tombol Assign -->
+                            <a href="{{ route('admin.showAssignItemPage', $item->id) }}" 
+                            class="assign-button flex items-center justify-start 
+                                    bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-bold
+                                    @if($item->item_status_id === 3) bg-gray-500 cursor-not-allowed @endif"
+                            @if($item->item_status_id === 3) 
+                                disabled="disabled" 
+                            @endif>
+                            Assign
+                            </a>
+                        @endif
                         </td>
                         <td class="py-4 px-6 border-b text-center">
                         <div class="flex flex-col items-center gap-2"></div>
+
+                            <!-- Tombol Disposed -->
+                            <form action="{{ route('admin.updateStatus', $item->id) }}" method="POST">
+                                @csrf
+                                @method('PATCH')
+                                <button type="submit" 
+                                    class="flex items-center justify-start 
+                                    bg-black text-white px-4 py-2 rounded w-full font-bold mb-2
+                                    @if($item->item_status_id === 3) bg-gray-500 cursor-not-allowed @endif
+                                    @if($item->item_status_id === 1) bg-gray-500 cursor-not-allowed @endif"
+                                    @if($item->item_status_id === 3 || $item->item_status_id === 1) 
+                                        disabled="disabled" 
+                                    @endif>
+                                    <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                    </svg>
+                                    Dispose
+                                </button>
+                            </form>
+
                             <!-- edit -->
                             <a href="{{ route('admin.editItem', $item->id) }}" 
                             class="flex items-center justify-start bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-lg w-full font-bold mb-2">
@@ -177,6 +203,16 @@
         const modal = document.getElementById('imageModal');
         modal.classList.add('hidden');
     }
+
+    // tombol assigned tidak bisa di click jika sudah disposed
+    document.querySelectorAll('.assign-button').forEach(button => {
+        button.addEventListener('click', function(event) {
+            if (this.hasAttribute('disabled')) {
+                event.preventDefault();
+            }
+        });
+    });
+
 </script>
 
 @endsection

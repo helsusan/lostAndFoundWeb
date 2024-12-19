@@ -25,16 +25,6 @@
                 @enderror
             </div>
 
-            <!-- status -->
-            <div class="mb-6">
-                <label for="status" class="block mb-2 text-sm font-medium">Status</label>
-                <select name="status" id="status" class="bg-white text-gray-900 text-sm rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                    <option value="pending" @if($item->status == 'pending') selected @endif>Pending</option>
-                    <option value="returned" @if($item->status == 'returned') selected @endif>Returned</option>
-                    <option value="disposed" @if($item->status == 'disposed') selected @endif>Disposed</option>
-                </select>
-            </div>
-
             <div class="flex justify-center gap-4">
                 <!-- cancel -->
                 <a href="{{ route('admin.showAdminItem') }}" 

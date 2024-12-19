@@ -52,6 +52,8 @@ Route::middleware('auth')->group(function () {
         Route::patch('/items/update-item-status/{id}', [ItemController::class, 'updateItemStatus']);
         Route::get('/admin/assign/item/{id}', [ItemController::class, 'showAssignItemPage'])->name('admin.showAssignItemPage');
         Route::post('/admin/assign/item/{id}', [ItemController::class, 'assignItem'])->name('admin.assignItem');
+        Route::patch('/items/update-status/{id}/', [ItemController::class, 'updateStatus'])->name('admin.updateStatus');
+
 
         Route::get('/locations', [LocationController::class, 'showListLocation'])->name('locations.showLocationList');
         Route::get('/locations/create', [LocationController::class, 'createLocation'])->name('locations.createLocation');

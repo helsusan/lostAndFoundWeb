@@ -216,47 +216,55 @@ class ItemController extends Controller
         // Validasi input
         $request->validate([
             'owner_name' => 'required|exists:users,id',  // Validasi user_id harus ada di tabel users
-            'status' => 'required|in:returned,disposed',  // Validasi status hanya boleh 'returned' atau 'disposed'
         ]);
     
         // Ambil item berdasarkan ID
         $item = Item::with('reports')->findOrFail($id);
     
         // Ambil user_id dari dropdown (owner_name)
-        $user_id = $request->input('owner_name');
+        $user_id = (int)$request->input('owner_name');
     
         // Ambil semua laporan terkait item
         $reports = $item->reports;
     
-        // Cek setiap laporan terkait item
+        // Iterasi laporan
         foreach ($reports as $report) {
             // Jika user_id di tabel reports tidak cocok dengan user_id di tabel items
-            if ($report->user_id !== $user_id) {
-                // Ubah item_id di laporan menjadi NULL
+            if ((int)$report->user_id !== $user_id) {
                 $report->update(['item_id' => null]);
-            } else {
-                // Jika cocok, item_id tetap (tidak diubah)
-                // Tidak ada tindakan yang diperlukan
             }
         }
     
-        // Cek jika status adalah 'disposed', maka tidak bisa diassign
-        if ($request->input('status') === 'disposed') {
-            return redirect()
-                ->route('admin.showAssignItemPage', $id)
-                ->withErrors(['status' => 'Item with status "disposed" cannot be assigned.'])
-                ->withInput();
-        }
-    
-        // Cari ID status 'returned' dari tabel item_statuses
+        // Tetapkan status 'returned' secara otomatis
         $statusId = \App\Models\ItemStatus::where('name', 'returned')->value('id');
     
         // Assign item ke user yang valid dan ubah status menjadi 'returned'
         $item->user_id = $user_id;
         $item->item_status_id = $statusId;
         $item->save();
+
+        Session::flash('title', 'Item successfully assigned!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
     
         // Redirect dengan pesan sukses
         return redirect()->route('admin.showAdminItem')->with('success', 'Item successfully assigned!');
     }
+
+    // mengubah status menjadi disposed
+    public function updateStatus($id)
+    {
+        $item = Item::findOrFail($id);
+        $item->item_status_id = 3;
+        $item->save();
+
+        Session::flash('title', 'Item successfully disposed!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
+
+        return redirect()->route('admin.showAdminItem')->with('success', 'Item has been disposed.');
+    }
+
+    
+     
 }
