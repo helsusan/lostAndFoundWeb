@@ -213,32 +213,24 @@ class ItemController extends Controller
     
     public function assignItem(Request $request, $id)
     {
-        // Validasi input
         $request->validate([
-            'owner_name' => 'required|exists:users,id',  // Validasi user_id harus ada di tabel users
+            'owner_name' => 'required|exists:users,id',
         ]);
     
-        // Ambil item berdasarkan ID
         $item = Item::with('reports')->findOrFail($id);
     
-        // Ambil user_id dari dropdown (owner_name)
         $user_id = (int)$request->input('owner_name');
     
-        // Ambil semua laporan terkait item
         $reports = $item->reports;
     
-        // Iterasi laporan
         foreach ($reports as $report) {
-            // Jika user_id di tabel reports tidak cocok dengan user_id di tabel items
             if ((int)$report->user_id !== $user_id) {
                 $report->update(['item_id' => null]);
             }
         }
     
-        // Tetapkan status 'returned' secara otomatis
         $statusId = \App\Models\ItemStatus::where('name', 'returned')->value('id');
     
-        // Assign item ke user yang valid dan ubah status menjadi 'returned'
         $item->user_id = $user_id;
         $item->item_status_id = $statusId;
         $item->save();
@@ -247,11 +239,9 @@ class ItemController extends Controller
         Session::flash('message', '');
         Session::flash('icon', 'success');
     
-        // Redirect dengan pesan sukses
         return redirect()->route('admin.showAdminItem')->with('success', 'Item successfully assigned!');
     }
 
-    // mengubah status menjadi disposed
     public function updateStatus($id)
     {
         $item = Item::findOrFail($id);
@@ -264,7 +254,4 @@ class ItemController extends Controller
 
         return redirect()->route('admin.showAdminItem')->with('success', 'Item has been disposed.');
     }
-
-    
-     
 }

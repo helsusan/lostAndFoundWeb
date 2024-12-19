@@ -105,11 +105,11 @@
                         @if($item->user_id)
                             <span class="font-medium">{{ $item->itemStatus->name ?? 'N/A' }}</span>
                         @else
-                            <!-- Tombol Assign -->
+                            <!-- tombol assign -->
                             <a href="{{ route('admin.showAssignItemPage', $item->id) }}" 
                             class="assign-button flex items-center justify-start 
                                     bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-bold
-                                    @if($item->item_status_id === 3) bg-gray-500 cursor-not-allowed @endif"
+                                    @if($item->item_status_id === 3) bg-gray-500 cursor-not-allowed hover:bg-gray-500 @endif"
                             @if($item->item_status_id === 3) 
                                 disabled="disabled" 
                             @endif>
@@ -120,15 +120,18 @@
                         <td class="py-4 px-6 border-b text-center">
                         <div class="flex flex-col items-center gap-2"></div>
 
-                            <!-- Tombol Disposed -->
+                            <!-- tombol disposed -->
                             <form action="{{ route('admin.updateStatus', $item->id) }}" method="POST">
                                 @csrf
                                 @method('PATCH')
                                 <button type="submit" 
                                     class="flex items-center justify-start 
-                                    bg-black text-white px-4 py-2 rounded w-full font-bold mb-2
-                                    @if($item->item_status_id === 3) bg-gray-500 cursor-not-allowed @endif
-                                    @if($item->item_status_id === 1) bg-gray-500 cursor-not-allowed @endif"
+                                        text-white px-4 py-2 rounded w-full font-bold mb-2
+                                        @if($item->item_status_id === 3 || $item->item_status_id === 1) 
+                                            bg-purple-300 cursor-not-allowed 
+                                        @else 
+                                            bg-purple-700 hover:bg-purple-800 
+                                        @endif"
                                     @if($item->item_status_id === 3 || $item->item_status_id === 1) 
                                         disabled="disabled" 
                                     @endif>
@@ -168,7 +171,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- modal -->
 <div id="imageModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 hidden">
     <div class="relative bg-white rounded-lg p-4 w-11/12 max-w-4xl">
         <button type="button" class="absolute top-2 right-2 focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
@@ -212,7 +215,6 @@
             }
         });
     });
-
 </script>
 
 @endsection
