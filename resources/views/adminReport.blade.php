@@ -25,6 +25,11 @@
         overflow: hidden; 
     }
 
+    .bg-gray-500.cursor-not-allowed:disabled {
+    background-color: #6B7280; /* Menentukan warna latar belakang tombol disabled */
+    cursor: not-allowed; /* Menambahkan cursor untuk disabled */
+    }
+
     select {
         appearance: none;
         padding: 8px 12px;
@@ -90,9 +95,10 @@
                         <td class="py-4 px-6 border-b text-center font-medium">{{ $report->time_lost ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-left font-medium">{{ $report->reportStatus->name ?? 'N/A' }}</td>
                         <td class="py-4 px-6 border-b text-left">
+                        <div class="flex flex-col items-center gap-2">
                             @if (is_null($report->item_id))
                                 <a href="{{ route('admin.showAssignPage', $report->id) }}" 
-                                   class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-bold">
+                                class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 font-bold">
                                     Assign
                                 </a>
                             @else
@@ -101,10 +107,14 @@
                                     class="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 font-bold">
                                         Detail
                                     </a>
+                                    
                                     <form action="{{ route('admin.cancelAssignItem', $report->id) }}" method="POST" class="w-full">
                                         @csrf
                                         @method('PUT')
-                                        <button type="submit" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 font-bold w-full">
+                                        <button type="submit" 
+                                                class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 font-bold w-full 
+                                                @if($report->item && $report->item->item_status_id == 1) bg-gray-500 cursor-not-allowed @endif"
+                                                @if($report->item && $report->item->item_status_id == 1) disabled="disabled" @endif>
                                             Cancel
                                         </button>
                                     </form>
