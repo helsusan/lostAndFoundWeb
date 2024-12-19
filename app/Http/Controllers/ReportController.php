@@ -36,7 +36,7 @@ class ReportController extends Controller
         Session::flash('title', 'Verification Successful!');
         Session::flash('message', '');
         Session::flash('icon', 'success');
-    
+
         return redirect()->route('admin.showAdminReport');
     }
 
@@ -67,28 +67,28 @@ class ReportController extends Controller
             'image.mimes' => 'The image must be a file of type: jpeg, png, jpg, gif.',
             'image.max' => 'The image size must not exceed 2MB.',
         ]);
-    
+
         // Perbarui gambar jika ada
         if ($request->hasFile('image')) {
             $imagePath = $this->uploadImage($request, $report);
             $report->image = $imagePath;
         }
-    
+
         // Perbarui laporan
         $report->update([
             'description' => $validatedData['description'],
             'location_id' => $validatedData['location_lost'],
             'location_lost' => $validatedData['location_detail'],
         ]);
-    
+
         // Flash message untuk notifikasi berhasil
         Session::flash('title', 'Item successfully updated!');
         Session::flash('message', '');
         Session::flash('icon', 'success');
-    
+
         return redirect()->route('admin.showAdminReport');
     }
-    
+
 
     private function uploadImage(Request $request, Report $report = null)
     {
@@ -146,24 +146,24 @@ class ReportController extends Controller
     // public function showAssignPage($reportId)
     // {
     //     $report = Report::findOrFail($reportId);
-    
+
     //     // Ambil items yang tidak ada di reports.item_id
     //     $items = Item::whereNotIn('id', Report::pluck('item_id')->filter())->get();
-    
+
     //     return view('assignItem', compact('report', 'items'));
     // }
 
     public function showAssignPage($reportId)
-{
-    $report = Report::findOrFail($reportId);
+    {
+        $report = Report::findOrFail($reportId);
 
-    // Ambil items yang tidak ada di reports.item_id dan item_status_id = 2
-    $items = Item::whereNotIn('id', Report::pluck('item_id')->filter())
-                 ->where('item_status_id', 2)  // Menambahkan filter item_status_id = 2
-                 ->get();
+        // Ambil items yang tidak ada di reports.item_id dan item_status_id = 2
+        $items = Item::whereNotIn('id', Report::pluck('item_id')->filter())
+            ->where('item_status_id', 2)  // Menambahkan filter item_status_id = 2
+            ->get();
 
-    return view('assignItem', compact('report', 'items'));
-}
+        return view('assignItem', compact('report', 'items'));
+    }
 
 
     //membatalkan item yang sudah terassign
@@ -171,7 +171,7 @@ class ReportController extends Controller
     {
         // Mematalkan item yang sudah terassign
         $report->update(['item_id' => null]);
-        
+
         Session::flash('title', 'Item canceled successfully!');
         Session::flash('message', '');
         Session::flash('icon', 'success');
@@ -179,4 +179,15 @@ class ReportController extends Controller
         return redirect()->route('admin.showAdminReport');
     }
     
+    public function userCancelAssignItem(Report $report)
+    {
+        // Mematalkan item yang sudah terassign
+        $report->update(['item_id' => null]);
+
+        Session::flash('title', 'Item canceled successfully!');
+        Session::flash('message', '');
+        Session::flash('icon', 'success');
+
+        return redirect()->route('myreport.showReports');
+    }
 }

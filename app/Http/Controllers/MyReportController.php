@@ -20,7 +20,6 @@ class MyReportController extends Controller
             $report->time_lost = \Carbon\Carbon::parse($report->time_lost)->format('d-m-y H:i:s');
             return $report;
         });
-
         return view('myReports', compact('reports'));
     }
 

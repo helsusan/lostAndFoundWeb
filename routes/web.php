@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::middleware(['role:1'])->group(function(){
+    Route::middleware(['role:1'])->group(function () {
         Route::get('/reports', [ReportController::class, 'showAdminReport'])->name('admin.showAdminReport');
         Route::put('/reports/verified/{report}', [ReportController::class, 'isVerified'])->name('admin.isVerified');
         Route::get('/reports/edit/{report}', [ReportController::class, 'editAdminReport'])->name('admin.editReport');
@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/locations/delete/{id}', [LocationController::class, 'deleteLocation'])->name('locations.deleteLocation');
     });
 
-    Route::middleware(['role:2'])->group(function(){
+    Route::middleware(['role:2'])->group(function () {
         Route::get('/myreports', [MyReportController::class, 'showMyReports'])->name('myreport.showReports');
         Route::get('/myreports/edit/{report}', [MyReportController::class, 'editMyReport'])->name('myreport.editReport');
         Route::put('/myreports/update/{report}', [MyReportController::class, 'updateMyReport'])->name('myreport.updateReport');
@@ -71,9 +71,10 @@ Route::middleware('auth')->group(function () {
         Route::delete('/myreports/{report}', [MyReportController::class, 'deleteMyReport'])->name('myreport.deleteReport');
         Route::get('/myreports/create', [MyReportController::class, 'createMyReport'])->name('myreport.createReport');
         Route::post('/myreports/insert', [MyReportController::class, 'insertMyReport'])->name('myreport.insertReport');
+        Route::get('/myitems/detail/{item}', [ReportController::class, 'detailItem'])->name('user.detailItem');
+        Route::put('/user/report/cancel-item/{report}', [ReportController::class, 'userCancelAssignItem'])->name('user.cancelAssignItem');
     });
 });
 
 
-require __DIR__.'/auth.php';
-
+require __DIR__ . '/auth.php';
